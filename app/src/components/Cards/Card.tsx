@@ -2,22 +2,16 @@ interface CardInfo {
   name: string;
   description: string;
   created_at: string;
+  ended_at: string;
   html_url?: string;
 }
 
 const stringTimeToDate = (time: string | undefined) => {
   if (!time) return "Geen datum beschikbaar";
+  
+  let formattedTime = parseInt(time) * 1000;
 
-  let date;
-  if (!time.includes("T")) {
-    // parse it as an int if it doesn't contain a T
-    let newTime = parseInt(time) * 1000;
-    date = new Date(newTime);
-  } else {
-    date = new Date(time);
-  }
-
-  return date.toLocaleDateString("nl-NL", {
+  return new Date(formattedTime).toLocaleDateString("nl-NL", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -25,6 +19,10 @@ const stringTimeToDate = (time: string | undefined) => {
 };
 
 function Card({ cardInfo }: { cardInfo: CardInfo[] }) {
+  cardInfo.sort((a, b) => {
+    return parseInt(a.created_at) - parseInt(b.created_at);
+  });
+
   return cardInfo.length > 0 ? (
     <>
       <ol className="items-center sm:flex">
@@ -53,7 +51,7 @@ function Card({ cardInfo }: { cardInfo: CardInfo[] }) {
                 {card.name}
               </h3>
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                {stringTimeToDate(card.created_at)}
+                {stringTimeToDate(card.created_at)} - {stringTimeToDate(card.ended_at) == "Geen datum beschikbaar" ? "Heden" : stringTimeToDate(card.ended_at)}
               </time>
               <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                 {card.description || "Geen beschrijving beschikbaar"}
