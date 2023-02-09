@@ -2,6 +2,7 @@ interface CardInfo {
   name: string;
   description: string;
   created_at: string;
+  ended_at: string;
   html_url?: string;
 }
 
@@ -53,7 +54,7 @@ function Card({ cardInfo }: { cardInfo: CardInfo[] }) {
                 {card.name}
               </h3>
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                {stringTimeToDate(card.created_at)}
+                {stringTimeToDate(card.created_at)} - {stringTimeToDate(card.ended_at) == "Geen datum beschikbaar" ? "Heden" : stringTimeToDate(card.ended_at)}
               </time>
               <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                 {card.description || "Geen beschrijving beschikbaar"}

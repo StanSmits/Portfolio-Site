@@ -9,6 +9,7 @@ interface CardInfo {
   name: string;
   description: string;
   created_at: string;
+  ended_at: string;
   html_url?: string;
 }
 
