@@ -19,6 +19,10 @@ const stringTimeToDate = (time: string | undefined) => {
 };
 
 function Card({ cardInfo }: { cardInfo: CardInfo[] }) {
+  cardInfo.sort((a, b) => {
+    return parseInt(a.created_at) - parseInt(b.created_at);
+  });
+
   return cardInfo.length > 0 ? (
     <>
       <ol className="items-center sm:flex">
