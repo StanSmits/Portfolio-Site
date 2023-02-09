@@ -13,11 +13,11 @@ app.get("/education", async (req, res) => {
     res.status(200).send(results[0])
 });
 
-app.post("/education", (req, res) => {
+app.post("/education", async (req, res) => {
   const { name, description, created_at } = req.body;
   if (name && description && created_at) {
     try {
-      db.promise().query(
+      await db.promise().query(
         `INSERT INTO Education VALUES('${name}','${description}','${created_at}')`
       );
       console.log('Added %d to the db', name)
@@ -33,12 +33,12 @@ app.get("/projects", async (req, res) => {
     res.status(200).send(results[0])
 });
 
-app.post("/projects", (req, res) => {
+app.post("/projects", async (req, res) => {
   // Check the authorisation
   const { name, description, created_at, html_url } = req.body;
   if (name && description && created_at && html_url) {
     try {
-      db.promise().query(
+      await db.promise().query(
         `INSERT INTO Projects VALUES('${name}','${description}','${created_at}', '${html_url}')`
       );
       console.log('Added %d to the db', name)
@@ -47,5 +47,11 @@ app.post("/projects", (req, res) => {
     }
   }
 });
+
+app.get("/aboutme", async (req, res) => {
+  const results = await db.promise().query(`SELECT * FROM AboutMe`)
+  console.log(results[0])
+  res.status(200).send(results[0])
+})
 
 app.listen(PORT, () => console.log("Listening on port " + PORT));
