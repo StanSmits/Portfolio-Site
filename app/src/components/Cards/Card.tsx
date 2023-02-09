@@ -8,17 +8,10 @@ interface CardInfo {
 
 const stringTimeToDate = (time: string | undefined) => {
   if (!time) return "Geen datum beschikbaar";
+  
+  let formattedTime = parseInt(time) * 1000;
 
-  let date;
-  if (!time.includes("T")) {
-    // parse it as an int if it doesn't contain a T
-    let newTime = parseInt(time) * 1000;
-    date = new Date(newTime);
-  } else {
-    date = new Date(time);
-  }
-
-  return date.toLocaleDateString("nl-NL", {
+  return new Date(formattedTime).toLocaleDateString("nl-NL", {
     day: "numeric",
     month: "long",
     year: "numeric",
