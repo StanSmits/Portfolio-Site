@@ -4,7 +4,6 @@ import axios from "axios";
 import Card from "./Card";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import {db, getEducation} from '../../service/Firebase'
 
 interface CardInfo {
   name: string;
