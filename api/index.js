@@ -45,7 +45,8 @@ app.post("/education", verifyToken, async (req, res) => {
       await db
         .promise()
         .query(
-          `INSERT INTO Education (name, description, created_at, ended_at) VALUES('${name}','${description}','${created_at}', '${ended_at}')`
+          "INSERT INTO Education (name, description, created_at, ended_at) VALUES (?,?,?,?)",
+          [name, description, created_at, ended_at]
         );
       res.status(200).send("success");
     } catch (err) {
@@ -57,7 +58,7 @@ app.post("/education", verifyToken, async (req, res) => {
 app.delete("/education/:id", verifyToken, async (req, res) => {
   id = req.params.id;
   try {
-    await db.promise().query(`DELETE FROM Education WHERE id = ${id}`);
+    await db.promise().query("DELETE FROM Education WHERE id = ?", [id]);
     res.status(200).send("success");
   } catch (err) {
     res.status(500).send("error");
@@ -78,9 +79,9 @@ app.post("/projects", verifyToken, async (req, res) => {
       await db
         .promise()
         .query(
-          `INSERT INTO Projects (name, description, created_at, ended_at, html_url) VALUES('${name}','${description}','${created_at}', '${ended_at}', '${html_url}')`
+          "INSERT INTO Projects (name, description, created_at, ended_at, html_url) VALUES (?,?,?,?,?)",
+          [name, description, created_at, ended_at, html_url]
         );
-      // Write a return message
       res.status(200).send("success");
     } catch (err) {
       res.status(500).send("error");
@@ -92,7 +93,7 @@ app.post("/projects", verifyToken, async (req, res) => {
 app.delete("/projects/:id", verifyToken, async (req, res) => {
   id = req.params.id;
   try {
-    await db.promise().query(`DELETE FROM Projects WHERE id = ${id}`);
+    await db.promise().query("DELETE FROM Projects WHERE id = ?", [id]);
     res.status(200).send("success");
   } catch (err) {
     res.status(500).send("error");
@@ -105,7 +106,7 @@ app.post("/login", async (req, res) => {
     try {
       const results = await db
         .promise()
-        .query(`SELECT * FROM Users WHERE username = '${username}'`);
+        .query("SELECT * FROM Users WHERE username = ?", [username]);
       if (results[0].length === 0) {
         res.status(404).send("User not found");
       } else {
@@ -136,7 +137,7 @@ app.post("/register", async (req, res) => {
     try {
       const results = await db
         .promise()
-        .query(`SELECT * FROM Users WHERE username = '${username}'`);
+        .query("SELECT * FROM Users WHERE username = ?"[username]);
       if (results[0].length === 0) {
         const hashedPassword = await bcrypt.hash(password, 10);
         await db
