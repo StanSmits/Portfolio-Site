@@ -55,7 +55,7 @@
 // The request will be intercepted by the auth interceptor and the JWT token will be added to the request header
 // The request will be made by axios
 
-import axios from "axios";
+import axios from "../interceptor/http.interceptor";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 

@@ -1,95 +1,101 @@
 <template>
-  <div 
+  <div
     class="px-5 flex items-center py-3 cursor-default"
-    :class="{'bg-purple-50': activeMenu, 'group hover:bg-gray-50': !activeMenu}"
-    @click="onClick">
-    <tw-icon 
-      :name="icon" 
-      class="icon w-5 h-5 text-gray-400 group-hover:text-gray-500"
-      :class="[iconClass, {'text-purple-500': activeMenu}]" />
+    :class="{
+      'bg-purple-50': activeMenu,
+      'group hover:bg-gray-50': !activeMenu,
+    }"
+    @click="onClick"
+  >
     <div class="pl-4 flex-grow flex items-center justify-between">
-      <div 
+      <div
         class="text text-sm text-gray-400 font-medium group-hover:text-gray-500"
-        :class="{'text-purple-500': activeMenu}">
+        :class="{ 'text-purple-500': activeMenu }"
+      >
         {{ text }}
-      </div> 
+      </div>
     </div>
   </div>
-  <div 
-    v-if="subMenuExists" 
+  <div
+    v-if="subMenuExists"
     class="pl-9 h-0 overflow-hidden"
-    :class="{'h-auto': showSubMenu}">
+    :class="{ 'h-auto': showSubMenu }"
+  >
     <slot name="sub-menu" />
   </div>
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
-  name: 'TheSidebarMenuItem',
+  name: "TheSidebarMenuItem",
   props: {
     text: {
       type: String,
-      required: true
-    },
-    icon: {
-      type: String,
-      required: true
+      required: true,
     },
     iconClass: {
       type: [String, Array, Object],
-      default: ''
+      default: "",
     },
     route: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     active: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
-  emits: ['update:active'],
-  setup(props, {emit, slots}) {
-    const subMenuExists = computed(() => !!slots['sub-menu'])
-    const showSubMenu = ref(false)
-    const activeMenu = ref(false)
+  emits: ["update:active"],
+  setup(props, { emit, slots }) {
+    const subMenuExists = computed(() => !!slots["sub-menu"]);
+    const showSubMenu = ref(false);
+    const activeMenu = ref(false);
 
-    watch(() => props.active, (val) => {
-      activeMenu.value = val
-      if (subMenuExists) showSubMenu.value = val
-    }, { immediate: true })
+    watch(
+      () => props.active,
+      (val) => {
+        activeMenu.value = val;
+        if (subMenuExists) showSubMenu.value = val;
+      },
+      { immediate: true }
+    );
 
-    watch(activeMenu, (val) => emit('update:active', val))
+    watch(activeMenu, (val) => emit("update:active", val));
 
-    const route = useRoute()
-    watch(route, (val) => {
-      if (val.name == props.route?.name || val.path == props.route?.path) {
-        activeMenu.value = true
-      } else {
-        activeMenu.value = false
-      }
-    }, { immediate: true })
+    const route = useRoute();
+    watch(
+      route,
+      (val) => {
+        if (val.name == props.route?.name || val.path == props.route?.path) {
+          activeMenu.value = true;
+        } else {
+          activeMenu.value = false;
+        }
+      },
+      { immediate: true }
+    );
 
-    const router = useRouter()
+    const router = useRouter();
     const onClick = () => {
-      if (subMenuExists.value) showSubMenu.value = !showSubMenu.value
-      else if (props.route) router.push(props.route)
-      else console.log('No action found!')
-    }
-    
+      if (subMenuExists.value) showSubMenu.value = !showSubMenu.value;
+      else if (props.route) router.push(props.route);
+      else console.log("No action found!");
+    };
+
     const setActiveMenu = (val) => {
-      activeMenu.value = val
-    }
+      activeMenu.value = val;
+    };
 
     return {
       subMenuExists,
       activeMenu,
       showSubMenu,
       onClick,
-      setActiveMenu
-    }
-  }
-}
+      setActiveMenu,
+    };
+  },
+};
 </script>

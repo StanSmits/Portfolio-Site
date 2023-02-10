@@ -88,7 +88,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../interceptor/http.interceptor";
+
 import { useRouter } from "vue-router";
 const router = useRouter();
 import { useToast } from "vue-toastification";

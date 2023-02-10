@@ -72,7 +72,6 @@ app.get("/projects", async (req, res) => {
 });
 
 app.post("/projects", verifyToken, async (req, res) => {
-  // Check the authorisation
   const { name, description, created_at, ended_at, html_url } = req.body;
   if (name && description && created_at && html_url) {
     try {

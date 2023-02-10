@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../interceptor/http.interceptor";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 

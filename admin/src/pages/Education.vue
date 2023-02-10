@@ -105,7 +105,6 @@ export default {
         .delete(`http://localhost:8080/education/${eduName}`)
         .then((response) => {
             toast.success("Entry deleted");
-            this.$router.go();
         })
         .catch((error) => {
             toast.error("Something went wrong");
