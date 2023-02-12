@@ -118,7 +118,7 @@ export default {
 
     deleteEntry(projectID) {
       axios
-        .delete(`http://localhost:8080/projects/${projectID}`)
+        .delete(`http://139.162.162.34:8080/projects/${projectID}`)
         .then((response) => {
             toast.success("Project deleted");
         })
@@ -139,7 +139,7 @@ export default {
 
   async mounted() {
     await axios
-      .get("http://localhost:8080/projects")
+      .get("http://139.162.162.34:8080/projects")
       .then((response) => {
         this.data = response.data;
         toast.success("Data loaded");
