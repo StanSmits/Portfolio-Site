@@ -25,7 +25,7 @@ function Card({ cardInfo }: { cardInfo: CardInfo[] }) {
 
   return cardInfo.length > 0 ? (
     <>
-      <ol className="items-center sm:flex">
+      <ol className="items-center sm:flex opacity-0 animate-fade-right animate-once animate-duration-[800ms] animate-ease-in-out animate-normal animate-fill-forwards animate-delay-200">
         {cardInfo.map((card, index) => (
           <li className="relative mb-6 sm:mb-0 w-full self-start min-w-[50%]" key={index}>
             <div className="flex items-center">

@@ -23,5 +23,7 @@ module.exports = {
       'mono': ['Anonymous-mono', 'ui-monospace', 'SFMono-Regular', "Courier New", 'monospace']
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 }
