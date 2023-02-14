@@ -84,12 +84,29 @@ export default {
           password: password,
         })
         .then((res) => {
+          toast.success("Login successful");
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("username", res.data.username);
           this.$router.push("/");
         })
-        .error((err) => {
-          toast.error("Invalid username or password");
+        .catch((err) => {
+          console.log(err);
+          switch (err.response.status) {
+            case 400:
+              toast.error("Login failed: You are missing a field");
+              break;
+            case 403:
+              toast.error("Login failed: Incorrect password");
+              break;
+            case 404:
+              toast.error("Login failed: User not found");
+              break;
+            case 500:
+              toast.error("Login failed: Server error");
+              break;
+            default:
+              toast.error("Login failed: Unknown error");
+          }
         });
     },
   },
