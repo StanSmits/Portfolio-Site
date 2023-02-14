@@ -96,13 +96,9 @@ export default {
   },
 
   methods: {
-    submitForm() {
-      console.log(this.form);
-    },
-
     deleteEntry(eduName) {
       axios
-        .delete(`http://localhost:8080/education/${eduName}`)
+        .delete(`http://139.162.162.34:8080/education/${eduName}`)
         .then((response) => {
             toast.success("Entry deleted");
         })
@@ -123,7 +119,7 @@ export default {
 
   async mounted() {
     await axios
-      .get("http://localhost:8080/education")
+      .get("http://139.162.162.34:8080/education")
       .then((response) => {
         this.data = response.data;
         toast.success("Data loaded");
