@@ -9,57 +9,56 @@
     <thead>
       <tr>
         <th
-          class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+          class="border-b  font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
         >
           Name
         </th>
         <th
-          class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+          class="border-b  font-medium p-4 pt-0 pb-3 text-slate-400  text-left"
         >
           Description
         </th>
         <th
-          class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+          class="border-b  font-medium p-4 pr-8 pt-0 pb-3 text-slate-400  text-left"
         >
           Created at
         </th>
         <th
-          class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+          class="border-b  font-medium p-4 pr-8 pt-0 pb-3 text-slate-400  text-left"
         >
           Ended at
         </th>
         <th
-          class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+          class="border-b  font-medium p-4 pr-8 pt-0 pb-3 text-slate-400  text-left"
         >
           Delete
         </th>
       </tr>
     </thead>
-    <tbody class="bg-white dark:bg-slate-800">
-      <!-- For each item in the array from the database do this -->
-      <tr v-for="eduItem in data">
+    <tbody class="bg-white">
+      <tr v-for="eduItem, index in data" class="opacity-0 animate-fade-right animate-once animate-duration-[800ms] animate-ease-in-out animate-normal animate-fill-forwards">
         <td
-          class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+          class="border-b border-slate-100  p-4 pl-8 text-slate-500"
         >
           {{ eduItem.name }}
         </td>
         <td
-          class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"
+          class="border-b border-slate-100  p-4 text-slate-500 "
         >
           {{ eduItem.description }}
         </td>
         <td
-          class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"
+          class="border-b border-slate-100  p-4 text-slate-500 "
         >
           {{ formatDate(eduItem.created_at) }}
         </td>
         <td
-          class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"
+          class="border-b border-slate-100  p-4 pr-8 text-slate-500 "
         >
           {{ formatDate(eduItem.ended_at) || "Present" }}
         </td>
         <td
-          class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"
+          class="border-b border-slate-100  p-4 pr-8 text-slate-500 "
         >
           <button
             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
