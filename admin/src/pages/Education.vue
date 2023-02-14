@@ -96,10 +96,6 @@ export default {
   },
 
   methods: {
-    submitForm() {
-      console.log(this.form);
-    },
-
     deleteEntry(eduName) {
       axios
         .delete(`http://139.162.162.34:8080/education/${eduName}`)
