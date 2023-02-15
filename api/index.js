@@ -186,7 +186,6 @@ app.post("/register", async (req, res) => {
       const amountOfUsers = await db
         .promise()
         .query("SELECT COUNT(*) FROM Users");
-      console.log(amountOfUsers[0][0]["COUNT(*)"]);
 
       if (amountOfUsers[0][0]["COUNT(*)"] >= 1) {
         return res

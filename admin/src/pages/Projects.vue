@@ -45,6 +45,7 @@
       <tr v-for="projItem in data" class="opacity-0 animate-fade-right animate-once animate-duration-[800ms] animate-ease-in-out animate-normal animate-fill-forwards">
         <td
           class="border-b border-slate-100  p-4 pl-8 text-slate-500 "
+          v-bind:data-id="projItem.id"
         >
           {{ projItem.name }}
         </td>
@@ -117,6 +118,10 @@ export default {
         .delete(`http://139.162.162.34:8080/projects/${projectID}`)
         .then((response) => {
             toast.success("Project deleted");
+            document.querySelector(`[data-id="${projectID}"]`).parentElement.className = "animate-fade-up animate-once animate-duration-[400ms] animate-ease-out animate-reverse animate-fill-both";
+            setTimeout(() => {
+              document.querySelector(`[data-id="${projectID}"]`).parentElement.remove();
+            }, 500);
         })
         .catch((error) => {
             toast.error("Error deleting project" + error);
