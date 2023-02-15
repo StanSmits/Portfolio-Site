@@ -1,11 +1,6 @@
 <!-- 
   TODO!:
-    * PROJECTS + EDUCATION
-      - On delete, remove item from the list
-        > Hopefully we can remove the row 
-          but worst case scenerio we can just reload the page
-      
-      - Create new entry button animation
+    * PROJECTS + EDUCATION      
       - Offset the animation of the table row
       - Add a loading animation
       - Toast notification should have margin on top so it doens't interfere with login screen
@@ -22,7 +17,8 @@
  -->
 <template>
   <button
-    class="bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline m-5"
+    class="bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline m-5
+    animate-pulse animate-once animate-duration-[400ms] animate-ease-out animate-normal animate-fill-both"
     @click="$router.push('new-education')"
     >
     Create new entry

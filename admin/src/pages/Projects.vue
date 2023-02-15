@@ -1,6 +1,7 @@
 <template>
   <button
-    class="bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline m-5"
+    class="bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline m-5
+    animate-pulse animate-once animate-duration-[400ms] animate-ease-out animate-normal animate-fill-both"
     @click="$router.push('new-project')"
   >
     Create new entry
