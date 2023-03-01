@@ -4,15 +4,15 @@
 
 @font-face {
   font-family: SF-Pro-Regular;
-  src: url("./fonts/SF-Pro-Display-Regular.woff2") format("woff2");
+  src: url("./assets/fonts/SF-Pro-Display-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: SF-Pro-SemiBold;
-  src: url("./fonts/SF-Pro-Display-Semibold.woff2") format("woff2");
+  src: url("./assets/fonts/SF-Pro-Display-Semibold.woff2") format("woff2");
 }
 @font-face {
   font-family: SF-Pro-Thin;
-  src: url("./fonts/SF-Pro-Display-Thin.woff2") format("woff2");
+  src: url("./assets/fonts/SF-Pro-Display-Thin.woff2") format("woff2");
 }
 
 @layer components {
