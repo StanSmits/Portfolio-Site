@@ -16,7 +16,7 @@ function Footer() {
             </a>
           </li>
           <li className="mx-2">
-          <a href="https://www.linkedin.com/in/stan-smits-63227b21a/">
+          <a href="https://www.linkedin.com/in/stan-smits-63227b21a/" target='_blank'>
           <i className="fa-brands fa-linkedin text-light text-xl hover:text-purple transition-all duration-300"></i>
             </a>
           </li>

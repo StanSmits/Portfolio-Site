@@ -14,7 +14,7 @@ const ImageWithShapes = () => {
     />
   </div>
   <div className="image-background transition-all duration-300"></div>
-  <div className="transition-all duration-300 item-shapes hidden lg:block group-hover:animate-wiggle group-hover:animate-infinite group-hover:animate-duration-[2500ms] group-hover:animate-ease-in-out"></div>
+  <div className="transition-all duration-300 item-shapes hidden lg:block animate-wiggle animate-infinite animate-duration-[2500ms] animate-ease-in-out"></div>
 </figure>
 
   );

@@ -8,7 +8,7 @@ function Header() {
       <div className="w-full flex flex-row justify-start p-4 pb-12 z-10 relative transition-all duration-500">
         <div className="container p-5 w-lg">
           <div>
-            <span className="text-dark dark:text-light text-6xl font-semibold transition-all duration-500 inline-block pr-2">
+            <span className="text-dark dark:text-light text-6xl font-semibold transition-all duration-500 inline-block pr-2 customcss__wave">
               👋
             </span>
             <h2 className="text-6xl font-semibold transition-all duration-500 customcss__header_text inline-block text-wrap whitespace-normal">
@@ -26,9 +26,9 @@ function Header() {
             needs of today but also paves the way for a brighter future.
           </p>
           <div className="flex flex-row justify-start items-center mt-5 font-primary">
-            <button className="transition-all duration-300 bg-card-secondary-blue dark:bg-card-secondary-blue text-light dark:text-light rounded-full py-2 px-6 hover:bg-dark hover:text-light hover:dark:bg-light hover:dark:text-dark">
+            <a href="#projects" className="transition-all duration-500 bg-card-secondary-blue dark:bg-card-secondary-blue text-light dark:text-light rounded-full py-2 px-6 hover:customcss__header_link hover:text-dark hover:dark:text-dark">
               Learn More
-            </button>
+            </a>
             <a
               className="text-dark m-4 dark:text-light hover:customcss__header_text transition-all duration-300"
               href="mailto:contact@stansmits.nl"

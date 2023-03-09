@@ -19,7 +19,7 @@ function getDataFromAPI(isEducation: boolean): CardInfo[] {
   if (isEducation) {
     useEffect(() => {
       axios
-        .get("http://139.162.162.34:8080/education")
+        .get("https://stansmits.nl/api/education")
         .then((response) => {
           setData(response.data);
         });
@@ -27,7 +27,7 @@ function getDataFromAPI(isEducation: boolean): CardInfo[] {
   } else {
     useEffect(() => {
       axios
-        .get("http://139.162.162.34:8080/projects")
+        .get("https://stansmits.nl/api/projects")
         .then((response) => {
           setData(response.data);
         });

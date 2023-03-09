@@ -17,7 +17,7 @@ function getDataFromAPI(): CardInfo[] {
   const [data, setData] = useState<CardInfo[]>([]);
 
   useEffect(() => {
-    axios.get("http://139.162.162.34:8080/education").then((response) => {
+    axios.get("https://stansmits.nl/api/education").then((response) => {
       setData(response.data);
     });
   }, []);

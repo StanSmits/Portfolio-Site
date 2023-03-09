@@ -15,7 +15,7 @@ function getDataFromAPI(): CardInfo[] {
   const [data, setData] = useState<CardInfo[]>([]);
 
   useEffect(() => {
-    axios.get("http://139.162.162.34:8080/projects").then((response) => {
+    axios.get("https://stansmits.nl/api/projects").then((response) => {
       setData(response.data);
     });
   }, []);
@@ -27,7 +27,7 @@ function Projects() {
 
   return (
     <>
-      <div className="transition-all duration-500 bg-off-grey dark:bg-off-blue pb-10 rounded-b-lg">
+      <div className="transition-all duration-500 bg-off-blue pb-10 rounded-b-lg">
         <div className="flex flex-col items-center relative">
           <BottomWave />
           <h2

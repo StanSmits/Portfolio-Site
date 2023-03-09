@@ -96,7 +96,7 @@ export default {
         }
 
       axios
-        .post("http://139.162.162.34:8080/education", {
+        .post("https://stansmits.nl/api/education", {
           name: this.form.name,
           description: this.form.description,
           created_at: (new Date(this.form.ended_at).valueOf()/1000).toString(),

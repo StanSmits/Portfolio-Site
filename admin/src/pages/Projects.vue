@@ -132,7 +132,7 @@ export default {
   methods: {
     deleteEntry(projectID) {
       axios
-        .delete(`http://139.162.162.34:8080/projects/${projectID}`)
+        .delete(`https://stansmits.nl/api/projects/${projectID}`)
         .then((response) => {
           toast.success("Project deleted");
           document.querySelector(
@@ -162,7 +162,7 @@ export default {
 
   async mounted() {
     await axios
-      .get("http://139.162.162.34:8080/projects")
+      .get("https://stansmits.nl/api/projects")
       .then((response) => {
         this.data = response.data;
         toast.success("Data loaded");

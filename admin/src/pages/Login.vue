@@ -76,7 +76,7 @@ export default {
       }
 
       await axios
-        .post("http://139.162.162.34:8080/login", {
+        .post("https://stansmits.nl/api/login", {
           username: username,
           password: password,
         })

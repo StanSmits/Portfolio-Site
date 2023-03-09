@@ -44,7 +44,7 @@ interface CardInfo {
                     ></path>
                   </svg>
                 </div>
-                <div className="transition-all duration-500 hidden sm:flex w-full bg-dark dark:bg-light h-0.5"></div>
+                <div className="transition-all duration-500 hidden sm:flex w-full bg-light h-0.5"></div>
               </div>
               <div className="mt-3 sm:pr-8">
                 <h3 className="text-lg font-semibold text-light">

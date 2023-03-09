@@ -16,13 +16,12 @@
 }
 
 @layer components {
-  :root {  
+  :root {
     --purple: rgb(123, 31, 162);
     --violet: rgb(103, 58, 183);
     --pink: rgb(244, 143, 177);
   }
-  
-  
+
   .customcss__header_text {
     animation: background-pan 3s linear infinite;
     background: linear-gradient(
@@ -38,12 +37,12 @@
     -webkit-text-fill-color: transparent;
     white-space: nowrap;
   }
-  
+
   @keyframes background-pan {
     from {
       background-position: 0% center;
     }
-    
+
     to {
       background-position: -200% center;
     }
@@ -62,7 +61,7 @@
     height: 100%;
     z-index: -1;
   }
-  
+
   .item-shapes {
     content: "";
     background-image: url(./assets/svg/shapes.svg);
@@ -76,6 +75,54 @@
     height: 150%;
     z-index: -1;
     overflow: hidden;
+  }
+
+  .customcss__header_link {
+    animation: background-pan 4s ease-in-out infinite alternate;
+    background: linear-gradient(
+      to right,
+      #bde0fe,
+      #a2d2ff,
+      #87c4ff,
+      #6cb6ff,
+      #87c4ff,
+      #a2d2ff,
+      #bde0fe
+    );
+    background-size: 140%;
+  }
+
+  .customcss__wave {
+    transform-origin: 70% 70%;
+    display: inline-block;
+    animation: wave_animation 3s ease-in-out 3;
+  }
+
+  @keyframes wave_animation {
+    0% {
+      rotate: 0deg;
+    }
+    10% {
+      rotate: 14deg;
+    }
+    20% {
+      rotate: -8deg;
+    }
+    30% {
+      rotate: 14deg;
+    }
+    40% {
+      rotate: -4deg;
+    }
+    50% {
+      rotate: 10deg;
+    }
+    60% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 0deg;
+    }
   }
 }
 

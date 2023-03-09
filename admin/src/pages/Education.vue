@@ -134,7 +134,7 @@ export default {
   methods: {
     deleteEntry(eduID) {
       axios
-        .delete(`http://139.162.162.34:8080/education/${eduID}`)
+        .delete(`https://stansmits.nl/api/education/${eduID}`)
         .then((response) => {
           toast.success("Entry deleted");
           document.querySelector(
@@ -164,7 +164,7 @@ export default {
 
   async mounted() {
     await axios
-      .get("http://139.162.162.34:8080/education")
+      .get("https://stansmits.nl/api/education")
       .then((response) => {
         this.data = response.data;
         toast.success("Data loaded");
