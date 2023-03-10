@@ -7,7 +7,7 @@ export const DarkModeToggle = memo(() => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <div className="h-8 w-8">
+    <div className="h-8 w-8 cursor-pointer">
       {theme === "dark" ? (
         <FontAwesomeIcon
           icon={faSun}

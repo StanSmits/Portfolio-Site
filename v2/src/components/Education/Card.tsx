@@ -59,7 +59,7 @@ interface CardInfo {
               </div>
             </li>
           ))}
-          <li className="relative mb-6 sm:mb-0 w-full self-start pr-5">
+          <li className="mb-6 sm:mb-0 w-full self-start pr-5 hidden sm:block">
             <div className="flex items-center">
             <div className="transition-all duration-500 z-10 flex items-center justify-center w-6 h-6 bg-dark dark:bg-light rounded-full ring-0 ring-white sm:ring-8 shrink-0">
                   <svg
