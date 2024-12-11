@@ -26,26 +26,21 @@ function App() {
         <div className="container mx-auto">
           <h2 className="mb-12 text-3xl font-bold">Education</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <EducationCard
-              title="Computer Science"
-              institution="University of Technology"
-              period="2018 - 2022"
-              description="Specialized in software engineering and web development. Graduated with honors."
-              size="large"
-            />
-            <EducationCard
-              title="Web Development Bootcamp"
-              institution="Code Academy"
-              period="2017 - 2018"
-              description="Intensive program focusing on modern web technologies and best practices."
-            />
-            <EducationCard
-              title="Digital Design"
-              institution="Design Institute"
-              period="2016 - 2017"
-              description="Fundamentals of UI/UX design and digital creativity."
-            />
-          </div>
+  <EducationCard
+    title="Computer Science"
+    institution="Hogeschool Leiden"
+    period="2021 - 2024"
+    description="Specialized in software engineering and computer science."
+    size="large"
+  />
+  <EducationCard
+    title="Middelbare School (Havo)"
+    institution="Fioretti College Lisse"
+    period="- 2016"
+    description="Graduated with a strong foundation in mathematics and science."
+  />
+</div>
+
         </div>
       </section>
 

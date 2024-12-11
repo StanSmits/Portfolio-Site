@@ -4,22 +4,22 @@ import { ExperienceCard } from './ExperienceCard';
 export const ExperienceSection: React.FC<{ mousePosition: { x: number; y: number } }> = ({ mousePosition }) => {
   const experiences = [
     {
-      title: "Senior Developer",
-      company: "Tech Solutions Inc.",
-      period: "2020 - Present",
-      description: "Leading development team in creating enterprise-level web applications."
+      title: "Handhaver Openbare Ruimte",
+      company: "Gemeente Amsterdam",
+      period: "2025 - Present",
+      description: "Tasked with maintaining public safety and enforcing municipal regulations, ensuring a safe and pleasant environment for all residents and visitors in Amsterdam. This role involves patrolling public spaces, handling disputes, and promoting community engagement."
     },
     {
-      title: "Full Stack Developer",
-      company: "Digital Innovations",
-      period: "2018 - 2020",
-      description: "Developed and maintained multiple client projects using React and Node.js."
+      title: "Specialist",
+      company: "Apple",
+      period: "2022 - 2024",
+      description: "Provided a unique, personalized experience to every customer, embodying Apple’s standard of excellence. Responsibilities included greeting guests, understanding their needs, and offering tailored solutions to enhance their interaction with Apple products and services."
     },
     {
-      title: "Junior Developer",
-      company: "StartUp Hub",
-      period: "2016 - 2018",
-      description: "Worked on various startup projects and gained extensive experience in modern web technologies."
+      title: "Klantenservicemedeweker",
+      company: "Albert Heijn",
+      period: "2020 - 2022",
+      description: "Delivered exceptional customer service by resolving issues, ensuring satisfaction, and contributing to process improvements to enhance the shopping experience."
     }
   ];
 
@@ -27,13 +27,15 @@ export const ExperienceSection: React.FC<{ mousePosition: { x: number; y: number
     <section className="px-4 py-20">
       <div className="container mx-auto">
         <h2 className="mb-12 text-3xl font-bold">Experience</h2>
-        <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="flex flex-col gap-2 lg:flex-row">
           {experiences.map((exp, index) => (
-            <ExperienceCard
-              key={index}
-              {...exp}
-              mousePosition={mousePosition}
-            />
+            <>
+              <ExperienceCard
+                key={index}
+                {...exp}
+                mousePosition={mousePosition}
+              />
+            </>
           ))}
         </div>
       </div>
