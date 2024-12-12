@@ -18,12 +18,12 @@ function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gray-950 text-white">
+    <div className="relative min-h-screen text-white">
       <BackgroundGradient mousePosition={mousePosition} />
       <Hero mousePosition={mousePosition} />
       {/* Education Section */}
       <section className="px-4 py-20">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-screen-lg">
           <h2 className="mb-12 text-3xl font-bold">Education</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
   <EducationCard
@@ -47,8 +47,8 @@ function App() {
       <ExperienceSection mousePosition={mousePosition} />
 
       {/* Contact Section */}
-      <section className="bg-gray-900/50 px-4 py-20">
-        <div className="container mx-auto text-center">
+      <section className=" px-4 py-20">
+        <div className="container mx-auto text-center max-w-screen-lg">
           <h2 className="mb-12 text-3xl font-bold">Let's Connect</h2>
           <div className="flex flex-wrap justify-center gap-8">
             <a
@@ -73,7 +73,7 @@ function App() {
 
       {/* Footer */}
       <footer className="border-t border-gray-800 px-4 py-8">
-        <div className="container mx-auto text-center text-gray-400">
+        <div className="container mx-auto text-center text-gray-400 max-w-screen-lg">
           <p>© {new Date().getFullYear()} Stan Smits. All rights reserved.</p>
         </div>
       </footer>

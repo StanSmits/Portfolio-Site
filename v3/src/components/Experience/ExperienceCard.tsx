@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useGradientEffect } from '../../hooks/useGradientEffect';
+import './experience.css';
 
 interface ExperienceCardProps {
   title: string;
@@ -18,16 +19,17 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { gradientPosition, isInBounds } = useGradientEffect(cardRef, mousePosition);
 
   return (
     <div 
       ref={cardRef} 
-      className="relative flex-1 p-6"
+      className="relative flex-1 p-6 h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="group relative overflow-hidden rounded-2xl bg-gray-900/50 p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-gray-900/70">
+      <div className="h-full group relative overflow-hidden rounded-2xl bg-gray-900/50 p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-gray-900/70">
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300"
           style={{
@@ -40,7 +42,15 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           <h3 className="text-xl font-bold text-white">{title}</h3>
           <p className="mt-1 text-purple-400">{company}</p>
           <p className="text-sm text-gray-400">{period}</p>
-          <p className="mt-4 text-gray-300">{description}</p>
+          <p className={`mt-4 text-gray-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
+            {description}
+          </p>
+          <button
+            className="mt-2 text-purple-400 hover:text-purple-300"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Show Less' : 'Show More'}
+          </button>
         </div>
       </div>
     </div>
