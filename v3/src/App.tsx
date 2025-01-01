@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Linkedin, Mail } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Hero } from './components/Hero/Hero';
 import { ExperienceSection } from './components/Experience/ExperienceSection';
-import { EducationCard } from './components/EducationCard';
+import { EducationSection } from './components/Education/EducationSection';
+import { ContactSection } from './components/Contact/ContactSection';
+import { Footer } from './components/Footer/Footer';
 import { BackgroundGradient } from './components/BackgroundGradient';
+import { ToolsLayout } from './layouts/ToolsLayout';
+import { Calculator } from './components/Tools/Calculator';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -18,66 +22,28 @@ function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-white">
-      <BackgroundGradient mousePosition={mousePosition} />
-      <Hero mousePosition={mousePosition} />
-      {/* Education Section */}
-      <section className="px-4 py-20">
-        <div className="container mx-auto max-w-screen-lg">
-          <h2 className="mb-12 text-3xl font-bold">Education</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  <EducationCard
-    title="Computer Science"
-    institution="Hogeschool Leiden"
-    period="2021 - 2024"
-    description="Specialized in software engineering and computer science."
-    size="large"
-  />
-  <EducationCard
-    title="Middelbare School (Havo)"
-    institution="Fioretti College Lisse"
-    period="- 2016"
-    description="Graduated with a strong foundation in mathematics and science."
-  />
-</div>
-
-        </div>
-      </section>
-
-      <ExperienceSection mousePosition={mousePosition} />
-
-      {/* Contact Section */}
-      <section className=" px-4 py-20">
-        <div className="container mx-auto text-center max-w-screen-lg">
-          <h2 className="mb-12 text-3xl font-bold">Let's Connect</h2>
-          <div className="flex flex-wrap justify-center gap-8">
-            <a
-              href="https://www.linkedin.com/in/stan-smits-63227b21a/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-purple-400 transition-colors hover:text-purple-300"
-            >
-              <Linkedin className="h-6 w-6" />
-              LinkedIn
-            </a>
-            <a
-              href="mailto:connect@stansmits.nl"
-              className="flex items-center gap-2 text-purple-400 transition-colors hover:text-purple-300"
-            >
-              <Mail className="h-6 w-6" />
-              Email
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 px-4 py-8">
-        <div className="container mx-auto text-center text-gray-400 max-w-screen-lg">
-          <p>© {new Date().getFullYear()} Stan Smits. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    <Router>
+      <div className="relative min-h-screen text-white">
+        <BackgroundGradient mousePosition={mousePosition} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero mousePosition={mousePosition} />
+                <EducationSection />
+                <ExperienceSection mousePosition={mousePosition} />
+                <ContactSection />
+              </>
+            }
+          />
+          <Route path="/tools" element={<ToolsLayout />}>
+            <Route path="calculator" element={<Calculator />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

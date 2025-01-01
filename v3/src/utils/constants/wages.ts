@@ -1,0 +1,6 @@
+export const WAGE_RATES = {
+  BASE: 14.45,
+  EVENING_BONUS_BEFORE_18: 0.75,
+  EVENING_BONUS_AFTER_18: 3.44,
+  SATURDAY: 21.66,
+} as const;
