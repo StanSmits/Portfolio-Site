@@ -5,7 +5,7 @@ import { ExperienceSection } from './components/Experience/ExperienceSection';
 import { EducationSection } from './components/Education/EducationSection';
 import { ContactSection } from './components/Contact/ContactSection';
 import { Footer } from './components/Footer/Footer';
-import { BackgroundGradient } from './components/BackgroundGradient';
+import { BackgroundGradient } from './components/BackgroundGradient/BackgroundGradient';
 import { ToolsLayout } from './layouts/ToolsLayout';
 import { Calculator } from './components/Tools/Calculator';
 import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
