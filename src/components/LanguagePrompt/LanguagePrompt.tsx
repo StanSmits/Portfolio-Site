@@ -6,8 +6,11 @@ export const LanguagePrompt: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    // Reset the language prompt state
-    localStorage.removeItem('languagePromptShown');
+    if (localStorage.getItem('languagePromptShown')) {
+      setShow(false);
+      return;
+    }
+
     setShow(true);
   }, []);
 
@@ -15,7 +18,7 @@ export const LanguagePrompt: React.FC = () => {
     i18n.changeLanguage(lang);
     setShow(false);
     localStorage.setItem('languagePromptShown', 'true');
-    console.log(i18n.language);
+    document.cookie = `i18next=${lang}; path=/; max-age=31536000`; // Set the cookie for 1 year
   };
 
   if (!show) return null;
@@ -29,7 +32,7 @@ export const LanguagePrompt: React.FC = () => {
             onClick={() => handleLanguageSelect('en')}
             className={
               i18n.language === 'en'
-                ? 'text-purple-400 flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
+                ? 'text-purple-400 flex items-center px-3 py-1 text-sm hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
                 : 'flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors duration-300'
             }
           >
@@ -40,7 +43,7 @@ export const LanguagePrompt: React.FC = () => {
             onClick={() => handleLanguageSelect('nl')}
             className={
               i18n.language === 'nl'
-                ? 'text-purple-400 flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
+                ? 'text-purple-400 flex items-center px-3 py-1 text-sm hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
                : 'flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors duration-300'
             }
           >

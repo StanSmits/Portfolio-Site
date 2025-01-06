@@ -14,9 +14,14 @@ i18n
     },
     fallbackLng: 'nl',
     detection: {
-      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
-      caches: ['localStorage', 'cookie']
+      order: ['cookie', 'localstorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+      caches: ['localStorage', 'cookie'],
+      lookupLocalStorage: 'i18nextLng',
+      lookupCookie: 'i18next',
+      lookupFromPathIndex: 0,
+      lookupFromSubdomainIndex: 0
     },
+    supportedLngs: ['en', 'nl'],
     interpolation: {
       escapeValue: false
     }
