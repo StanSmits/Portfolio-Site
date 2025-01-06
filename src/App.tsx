@@ -9,7 +9,7 @@ import { BackgroundGradient } from './components/BackgroundGradient/BackgroundGr
 import { ToolsLayout } from './layouts/ToolsLayout';
 import { Calculator } from './components/Tools/Calculator';
 import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
-import { LoadingSpinner } from './components/LoadingSpinner';
+import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
 import { NotFound } from './components/NotFound';
 
 function App() {
