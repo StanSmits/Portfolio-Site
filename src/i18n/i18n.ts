@@ -12,7 +12,11 @@ i18n
       en: { translation: en },
       nl: { translation: nl }
     },
-    fallbackLng: 'en',
+    fallbackLng: 'nl',
+    detection: {
+      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
+      caches: ['localStorage', 'cookie']
+    },
     interpolation: {
       escapeValue: false
     }
