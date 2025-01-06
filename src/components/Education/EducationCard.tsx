@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface EducationCardProps {
   title: string;
@@ -15,6 +16,8 @@ export const EducationCard: React.FC<EducationCardProps> = ({
   description,
   size = 'normal',
 }) => {
+  const { t } = useTranslation();
+
   const cardContent = (
     <div className="group h-full rounded-2xl bg-gray-900/50 p-6 transition-all hover:scale-[1.02] hover:bg-gray-900/70">
       <div className="flex h-full flex-col">
@@ -26,11 +29,9 @@ export const EducationCard: React.FC<EducationCardProps> = ({
     </div>
   );
 
-  return size === 'large' ? (
-    <div className="col-span-2 row-span-2">
+  return (
+    <div className={`${size === 'large' ? 'col-span-full md:col-span-2' : 'col-span-full md:col-span-1'}`}>
       {cardContent}
     </div>
-  ) : (
-    cardContent
   );
 };

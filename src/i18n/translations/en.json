@@ -1,0 +1,84 @@
+{
+  "hero": {
+    "title": "Stan Smits",
+    "description": "I am a driven professional with a strong foundation in Computer Science and Web Development, specializing in creating seamless experiences for users. With a background in customer service and public engagement, I combine technical expertise with exceptional interpersonal skills to deliver innovative and personalized solutions."
+  },
+  "sections": {
+    "education": "Education",
+    "experience": "Experience",
+    "contact": "Let's Connect"
+  },
+  "education": {
+    "computerScience": {
+      "title": "Computer Science",
+      "institution": "Hogeschool Leiden",
+      "period": "2021 - 2024",
+      "description": "Specialized in software engineering and computer science."
+    },
+    "highSchool": {
+      "title": "High School (HAVO)",
+      "institution": "Fioretti College Lisse",
+      "period": "- 2016",
+      "description": "Graduated with a strong foundation in mathematics and science."
+    }
+  },
+  "experience": {
+    "enforcer": {
+      "title": "Public Space Enforcer",
+      "company": "Municipality of Amsterdam",
+      "period": "2025 - Present",
+      "description": "Tasked with maintaining public safety and enforcing municipal regulations, ensuring a safe and pleasant environment for all residents and visitors in Amsterdam. This role involves patrolling public spaces, handling disputes, and promoting community engagement."
+    },
+    "driver": {
+      "title": "Delivery Driver",
+      "company": "Amazon",
+      "period": "2024 - 2025",
+      "description": "Delivered packages to customers in a timely and professional manner, ensuring that all items arrived safely and on time. Responsibilities included planning routes, loading and unloading vehicles, and providing excellent customer service."
+    },
+    "installer": {
+      "title": "Heat Pump Installer",
+      "company": "Eco-Electric",
+      "period": "2024 - 2024",
+      "description": "Installed and maintained heat pumps for residential and commercial clients, ensuring that systems were operating efficiently and safely. Responsibilities included diagnosing issues, performing repairs, and providing excellent customer service."
+    },
+    "specialist": {
+      "title": "Specialist",
+      "company": "Apple",
+      "period": "2022 - 2024",
+      "description": "Provided a unique, personalized experience to every customer, embodying Apple's standard of excellence. Responsibilities included greeting guests, understanding their needs, and offering tailored solutions to enhance their interaction with Apple products and services."
+    },
+    "customerService": {
+      "title": "Customer Service Representative",
+      "company": "Albert Heijn",
+      "period": "2020 - 2022",
+      "description": "Delivered exceptional customer service by resolving issues, ensuring satisfaction, and contributing to process improvements to enhance the shopping experience."
+    },
+    "allRound": {
+      "title": "All-round Employee",
+      "company": "Hema",
+      "period": "2019 - 2020",
+      "description": "Performed a variety of tasks, including customer service, restocking, and cashiering, to ensure the store ran smoothly and customers received the best possible service."
+    }
+  },
+  "contact": {
+    "linkedin": "LinkedIn",
+    "email": "Email"
+  },
+  "tools": {
+    "calculator": {
+      "title": "Wage Calculator",
+      "description": "Quick way to calculate the amount of pay that I'd receive while working at Amazon."
+    }
+  },
+  "footer": {
+    "home": "Home",
+    "tools": "Tools",
+    "language": "Language",
+    "copyright": "© {year} Stan Smits"
+  },
+  "languagePrompt": {
+    "select": "Select your preferred language:",
+    "english": "English",
+    "dutch": "Dutch"
+  }
+}

@@ -8,6 +8,7 @@ import { Footer } from './components/Footer/Footer';
 import { BackgroundGradient } from './components/BackgroundGradient';
 import { ToolsLayout } from './layouts/ToolsLayout';
 import { Calculator } from './components/Tools/Calculator';
+import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -42,6 +43,7 @@ function App() {
           </Route>
         </Routes>
         <Footer />
+        <LanguagePrompt />
       </div>
     </Router>
   );

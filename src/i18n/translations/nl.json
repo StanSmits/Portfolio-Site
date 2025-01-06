@@ -1,0 +1,84 @@
+{
+  "hero": {
+    "title": "Stan Smits",
+    "description": "Ik ben een gedreven professional met een sterke basis in Informatica en Webontwikkeling, gespecialiseerd in het creëren van naadloze gebruikerservaringen. Met een achtergrond in klantenservice en publieke dienstverlening combineer ik technische expertise met uitstekende interpersoonlijke vaardigheden om innovatieve en gepersonaliseerde oplossingen te leveren."
+  },
+  "sections": {
+    "education": "Opleiding",
+    "experience": "Werkervaring",
+    "contact": "Contact"
+  },
+  "education": {
+    "computerScience": {
+      "title": "Informatica",
+      "institution": "Hogeschool Leiden",
+      "period": "2021 - 2024",
+      "description": "Gespecialiseerd in software engineering en informatica."
+    },
+    "highSchool": {
+      "title": "Middelbare School (Havo)",
+      "institution": "Fioretti College Lisse",
+      "period": "- 2016",
+      "description": "Afgestudeerd met een sterke basis in wiskunde en beta vakken."
+    }
+  },
+  "experience": {
+    "enforcer": {
+      "title": "Handhaver Openbare Ruimte",
+      "company": "Gemeente Amsterdam",
+      "period": "2025 - Heden",
+      "description": "Verantwoordelijk voor het handhaven van de openbare veiligheid en gemeentelijke regelgeving, zorgen voor een veilige en aangename omgeving voor alle bewoners en bezoekers van Amsterdam. Deze rol omvat het patrouilleren in de openbare ruimte, het afhandelen van geschillen en het bevorderen van betrokkenheid van de gemeenschap."
+    },
+    "driver": {
+      "title": "Bezorger",
+      "company": "Amazon",
+      "period": "2024 - 2025",
+      "description": "Pakketten op tijd en professioneel bij klanten bezorgd, waarbij werd gezorgd dat alle items veilig en op tijd aankwamen. Verantwoordelijkheden omvatten het plannen van routes, laden en lossen van voertuigen en het bieden van uitstekende klantenservice."
+    },
+    "installer": {
+      "title": "Warmtepomp Installateur",
+      "company": "Eco-Electric",
+      "period": "2024 - 2024",
+      "description": "Installatie en onderhoud van warmtepompen voor particuliere en zakelijke klanten, waarbij werd gezorgd dat systemen efficiënt en veilig werkten. Verantwoordelijkheden omvatten het diagnosticeren van problemen, uitvoeren van reparaties en het bieden van uitstekende klantenservice."
+    },
+    "specialist": {
+      "title": "Specialist",
+      "company": "Apple",
+      "period": "2022 - 2024",
+      "description": "Bood een unieke, gepersonaliseerde ervaring aan elke klant, waarbij Apple's standaard van uitmuntendheid werd belichaamd. Verantwoordelijkheden omvatten het begroeten van gasten, begrijpen van hun behoeften en het aanbieden van oplossingen op maat om hun interactie met Apple-producten en -diensten te verbeteren."
+    },
+    "customerService": {
+      "title": "Klantenservicemedewerker",
+      "company": "Albert Heijn",
+      "period": "2020 - 2022",
+      "description": "Leverde uitzonderlijke klantenservice door het oplossen van problemen, waarborgen van tevredenheid en bijdragen aan procesverbeteringen om de winkelervaring te verbeteren."
+    },
+    "allRound": {
+      "title": "All-round Medewerker",
+      "company": "Hema",
+      "period": "2019 - 2020",
+      "description": "Voerde verschillende taken uit, waaronder klantenservice, bijvullen en kassawerkzaamheden, om ervoor te zorgen dat de winkel soepel draaide en klanten de best mogelijke service ontvingen."
+    }
+  },
+  "contact": {
+    "linkedin": "LinkedIn",
+    "email": "E-mail"
+  },
+  "tools": {
+    "calculator": {
+      "title": "Salarisberekening",
+      "description": "Snelle manier om het salaris te berekenen dat ik zou ontvangen tijdens het werken bij Amazon."
+    }
+  },
+  "footer": {
+    "home": "Home",
+    "tools": "Tools",
+    "language": "Taal",
+    "copyright": "© {year} Stan Smits"
+  },
+  "languagePrompt": {
+    "select": "Selecteer je voorkeurstaal:",
+    "english": "Engels",
+    "dutch": "Nederlands"
+  }
+}
