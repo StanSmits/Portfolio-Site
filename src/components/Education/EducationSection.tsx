@@ -25,9 +25,14 @@ export const EducationSection: React.FC = () => {
     <section className="px-4 py-20">
       <div className="container mx-auto max-w-screen-lg">
         <h2 className="mb-12 text-3xl font-bold">{t('sections.education')}</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {educationData.map((edu, index) => (
-            <div key={index} className={`${edu.size === 'large' ? 'col-span-full md:col-span-2' : 'col-span-full md:col-span-1'}`}>
+            <div
+              key={index}
+              className={`col-span-full p-6 md:p-0 ${
+                edu.size === 'large' ? 'md:col-span-2 lg:col-span-2' : 'md:col-span-1 lg:col-span-1'
+              }`}
+            >
               <EducationCard {...edu} />
             </div>
           ))}
