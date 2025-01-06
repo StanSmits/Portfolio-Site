@@ -19,6 +19,12 @@ export const EducationSection: React.FC = () => {
       period: t('education.highSchool.period'),
       description: t('education.highSchool.description'),
     },
+    {
+      title: t('education.bio.title'),
+      institution: t('education.bio.institution'),
+      period: t('education.bio.period'),
+      description: t('education.bio.description'),
+    },
   ];
 
   return (
