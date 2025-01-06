@@ -11,7 +11,7 @@ export const EducationSection: React.FC = () => {
       institution: t('education.bio.institution'),
       period: t('education.bio.period'),
       description: t('education.bio.description'),
-      size: 'large',
+      size: 'large' as 'large' | 'normal' | undefined,
     },
     {
       title: t('education.computerScience.title'),

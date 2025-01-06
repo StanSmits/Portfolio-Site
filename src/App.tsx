@@ -9,9 +9,12 @@ import { BackgroundGradient } from './components/BackgroundGradient';
 import { ToolsLayout } from './layouts/ToolsLayout';
 import { Calculator } from './components/Tools/Calculator';
 import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
+import { LoadingSpinner } from './components/LoadingSpinner';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+  const [latestCommit, setLatestCommit] = useState<{ sha: string; html_url: string } | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -22,9 +25,28 @@ function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const fetchLatestCommit = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://api.github.com/repos/StanSmits/Portfolio-Site/commits');
+        const data = await response.json();
+        const latestCommit = data[0];
+        setLatestCommit({ sha: latestCommit.sha, html_url: latestCommit.html_url });
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching latest commit:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchLatestCommit();
+  }, []);
+
   return (
     <Router>
       <div className="relative min-h-screen text-white">
+        {isLoading && <LoadingSpinner />}
         <BackgroundGradient mousePosition={mousePosition} />
         <Routes>
           <Route
@@ -42,7 +64,7 @@ function App() {
             <Route path="calculator" element={<Calculator />} />
           </Route>
         </Routes>
-        <Footer />
+        <Footer latestCommit={latestCommit} />
         <LanguagePrompt />
       </div>
     </Router>
