@@ -10,7 +10,7 @@ import { ToolsLayout } from './layouts/ToolsLayout';
 import { Calculator } from './components/Tools/Calculator';
 import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
-import { NotFound } from './components/NotFound';
+import { NotFound } from './components/NotFound/NotFound';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
