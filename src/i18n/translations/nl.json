@@ -71,9 +71,15 @@
     "email": "E-mail"
   },
   "tools": {
+    "title": "Tools",
+    "goBack": "Ga terug",
     "calculator": {
       "title": "Salarisberekening",
-      "description": "Snelle manier om het salaris te berekenen dat ik zou ontvangen tijdens het werken bij Amazon."
+      "continueWithLastResult": "Doorgaan met uw laatste resultaat?",
+      "description": "Snelle manier om het salaris te berekenen dat ik zou ontvangen tijdens het werken bij Amazon.",
+      "textAreaPlaceholder": "Vul shift tijden in (b.v., 10-12-2024 11:45-20:04 dag-maand-jaar )",
+      "calculateWage": "Bereken salaris",
+      "total": "Totaal: "
     }
   },
   "footer": {

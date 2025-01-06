@@ -71,9 +71,16 @@
     "email": "Email"
   },
   "tools": {
+    "title": "Tools",
+    "goBack": "Go back",
     "calculator": {
       "title": "Wage Calculator",
-      "description": "Quick way to calculate the amount of pay that I'd receive while working at Amazon."
+      "continueWithLastResult": "Continue with your last result?",
+      "description": "Quick way to calculate the amount of pay that I'd receive while working at Amazon.",
+      "textAreaPlaceholder": "Enter shift times (e.g., 10-12-2024 11:45-20:04 day-month-year starting:time-ending:time) ",
+      "calculateWage": "Calculate wage",
+      "total": "Total: "
+      
     }
   },
   "footer": {
