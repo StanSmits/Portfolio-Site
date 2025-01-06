@@ -7,23 +7,23 @@ export const EducationSection: React.FC = () => {
 
   const educationData = [
     {
+      title: t('education.bio.title'),
+      institution: t('education.bio.institution'),
+      period: t('education.bio.period'),
+      description: t('education.bio.description'),
+      size: 'large',
+    },
+    {
       title: t('education.computerScience.title'),
       institution: t('education.computerScience.institution'),
       period: t('education.computerScience.period'),
       description: t('education.computerScience.description'),
-      size: 'large',
     },
     {
       title: t('education.highSchool.title'),
       institution: t('education.highSchool.institution'),
       period: t('education.highSchool.period'),
       description: t('education.highSchool.description'),
-    },
-    {
-      title: t('education.bio.title'),
-      institution: t('education.bio.institution'),
-      period: t('education.bio.period'),
-      description: t('education.bio.description'),
     },
   ];
 
