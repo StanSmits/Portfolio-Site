@@ -80,11 +80,17 @@
     "home": "Home",
     "tools": "Tools",
     "language": "Language",
-    "copyright": "© {year} Stan Smits"
+    "copyright": "© {year} Stan Smits",
+    "latestCommit": "Latest commit: "
   },
   "languagePrompt": {
     "select": "Select your preferred language:",
     "english": "English",
     "dutch": "Dutch"
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "homeLink": "Go back to the homepage"
   }
 }

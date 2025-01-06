@@ -80,11 +80,17 @@
     "home": "Home",
     "tools": "Tools",
     "language": "Taal",
-    "copyright": "© {year} Stan Smits"
+    "copyright": "© {year} Stan Smits",
+    "latestCommit": "Laatste aanpassing: "
   },
   "languagePrompt": {
     "select": "Selecteer je voorkeurstaal:",
     "english": "Engels",
     "dutch": "Nederlands"
+  },
+  "notFound": {
+    "title": "404 - Pagina niet gevonden",
+    "description": "De pagina die je zoekt bestaat niet.",
+    "homeLink": "Ga terug naar de homepage"
   }
 }
