@@ -10,11 +10,11 @@ export const ToolsMenu: React.FC = () => {
   const { t } = useTranslation();
   
   return (
-    <div className="group relative">
+    <div className="group relative w-full">
       <span className="px-4 py-2 text-gray-300 hover:text-purple-400 transition-colors cursor-pointer">
         {t('footer.tools')}
       </span>
-      <div className="absolute left-0 bottom-full mb-2 w-48 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
+      <div className="absolute w-full grid bottom-full mb-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
         <div className="rounded-lg bg-gray-900/95 p-2 shadow-lg backdrop-blur-sm">
           {tools.map((tool) => (
             <Link

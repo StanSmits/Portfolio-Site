@@ -10,7 +10,7 @@ export const LanguageSelector: React.FC = () => {
         <span className="mr-2">{i18n.language === 'nl' ? '🇳🇱' : '🇬🇧'}</span>
         {i18n.language === 'nl' ? 'NL' : 'EN'}
       </span>
-      <div className="absolute bottom-full right-0 mb-2 w-32 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
+      <div className="absolute bottom-full mb-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
         <div className="rounded-lg bg-gray-900/95 p-2 shadow-lg backdrop-blur-sm">
           <button
             onClick={() => i18n.changeLanguage('en')}
