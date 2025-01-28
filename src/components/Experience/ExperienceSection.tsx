@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ExperienceCard } from './ExperienceCard';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from '../LoadingSpinner/Skeleton';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import './experience.css';
 
-export const ExperienceSection: React.FC<{ mousePosition: { x: number; y: number } }> = ({ mousePosition }) => {
+const ExperienceCardSkeleton = () => (
+  <div className="h-64">
+    <Skeleton className="h-full rounded-2xl" />
+  </div>
+);
+
+const SectionTitle: React.FC<{ title: string }> = ({ title }) => {
+  const { elementRef, isVisible } = useScrollAnimation();
+
+  return (
+    <h2
+      ref={elementRef}
+      className={`mb-12 text-3xl font-bold transition-all duration-700 transform ${
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+      }`}
+    >
+      {title}
+    </h2>
+  );
+};
+
+const ExperienceSection: React.FC<{
+  mousePosition: { x: number; y: number };
+}> = ({ mousePosition }) => {
   const { t } = useTranslation();
 
   const experiences = [
@@ -48,14 +73,17 @@ export const ExperienceSection: React.FC<{ mousePosition: { x: number; y: number
   return (
     <section className="px-4 py-20">
       <div className="container mx-auto max-w-screen-lg">
-        <h2 className="mb-12 text-3xl font-bold">{t('sections.experience')}</h2>
+        <SectionTitle title={t('sections.experience')} />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {experiences.map((exp, index) => (
             <div key={index} className="w-full h-full">
-              <ExperienceCard
-                {...exp}
-                mousePosition={mousePosition}
-              />
+              <Suspense fallback={<ExperienceCardSkeleton />}>
+                <ExperienceCard
+                  {...exp}
+                  mousePosition={mousePosition}
+                  index={index}
+                />
+              </Suspense>
             </div>
           ))}
         </div>
@@ -63,3 +91,5 @@ export const ExperienceSection: React.FC<{ mousePosition: { x: number; y: number
     </section>
   );
 };
+
+export default ExperienceSection;

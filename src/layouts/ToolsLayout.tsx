@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-export const ToolsLayout: React.FC = () => {
+const ToolsLayout: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -15,7 +15,7 @@ export const ToolsLayout: React.FC = () => {
           className="flex items-center text-sm text-gray-300 hover:text-purple-500 focus:outline-none transition-all duration-300 hover:scale-[1.02]"
         >
           <ArrowLeft className="mr-2" />
-          { t("tools.goBack") }
+          {t('tools.goBack')}
         </button>
         <h1 className="text-4xl font-bold text-white mt-4">Tools</h1>
       </div>
@@ -25,3 +25,5 @@ export const ToolsLayout: React.FC = () => {
     </div>
   );
 };
+
+export default ToolsLayout;

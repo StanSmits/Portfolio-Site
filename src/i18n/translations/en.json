@@ -80,7 +80,6 @@
       "textAreaPlaceholder": "Enter shift times (e.g., 10-12-2024 11:45-20:04 day-month-year starting:time-ending:time) ",
       "calculateWage": "Calculate wage",
       "total": "Total: "
-      
     }
   },
   "footer": {
@@ -99,5 +98,12 @@
     "title": "404 - Page Not Found",
     "description": "The page you are looking for does not exist.",
     "homeLink": "Go back to the homepage"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content"
+  },
+  "meta": {
+    "title": "Stan Smits - Software Developer & Public Safety Professional",
+    "description": "Professional portfolio of Stan Smits, showcasing expertise in Computer Science, Web Development, and Public Safety."
   }
 }

@@ -1,15 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linkedin, Mail } from 'lucide-react';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
-export const ContactSection: React.FC = () => {
+const ContactSection: React.FC = () => {
   const { t } = useTranslation();
+  const { elementRef, isVisible } = useScrollAnimation();
 
   return (
     <section className="px-4 py-20">
       <div className="container mx-auto text-center max-w-screen-lg">
         <h2 className="mb-12 text-3xl font-bold">{t('sections.contact')}</h2>
-        <div className="flex flex-wrap justify-center gap-8">
+        <div
+          ref={elementRef}
+          className={`flex flex-wrap justify-center gap-8 transition-all duration-700 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`}
+        >
           <a
             href="https://www.linkedin.com/in/stan-smits-63227b21a/"
             target="_blank"
@@ -31,3 +38,5 @@ export const ContactSection: React.FC = () => {
     </section>
   );
 };
+
+export default ContactSection;

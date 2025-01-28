@@ -98,5 +98,12 @@
     "title": "404 - Pagina niet gevonden",
     "description": "De pagina die je zoekt bestaat niet.",
     "homeLink": "Ga terug naar de homepage"
+  },
+  "accessibility": {
+    "skipToContent": "Ga naar hoofdinhoud"
+  },
+  "meta": {
+    "title": "Stan Smits - Software Developer & Handhaver",
+    "description": "Professionele portfolio van Stan Smits, met expertise in Informatica, Webontwikkeling en Handhaving."
   }
 }
