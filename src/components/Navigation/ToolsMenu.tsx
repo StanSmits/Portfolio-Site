@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const tools = [
   { name: 'calculator', path: '/tools/calculator' },
+  { name: 'tod', path: '/tools/tod' },
 ];
 
 export const ToolsMenu: React.FC = () => {

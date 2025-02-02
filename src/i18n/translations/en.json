@@ -80,6 +80,23 @@
       "textAreaPlaceholder": "Enter shift times (e.g., 10-12-2024 11:45-20:04 day-month-year starting:time-ending:time) ",
       "calculateWage": "Calculate wage",
       "total": "Total: "
+    },
+    "tod": {
+      "title": "Toeslagen Onregelmatige Diensten (TOD) Calculator",
+      "description": "Quick way to show the extra % you get for working on irregular hours.",
+      "hourlyWage": "Hourly Wage (€)",
+      "monthlyWage": "Monthly Wage (€)",
+      "enterWage": "Enter your {{type}} wage",
+      "wagePerHour": "Wage per hour:",
+      "shifts": {
+        "baseSalary": "Base hourly Salary",
+        "weekdayEarlyMorning": "Monday to Friday 00:00 to 06:00",
+        "weekdayMorning": "Monday to Friday 06:00 to 08:00",
+        "weekdayEvening": "Monday to Friday 18:00 to 22:00",
+        "weekdayNight": "Monday to Friday 22:00 to 24:00",
+        "saturday": "Saturday 00:00 to 24:00",
+        "sundayHoliday": "Sunday and holidays 00:00 to 24:00"
+      }
     }
   },
   "footer": {

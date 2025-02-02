@@ -80,6 +80,23 @@
       "textAreaPlaceholder": "Vul shift tijden in (b.v., 10-12-2024 11:45-20:04 dag-maand-jaar )",
       "calculateWage": "Bereken salaris",
       "total": "Totaal: "
+    },
+    "tod": {
+      "title": "Toeslagen Onregelmatige Diensten (TOD) berekenen",
+      "description": "Snelle manier om de extra % te tonen die je krijgt voor werken op onregelmatige uren.",
+      "hourlyWage": "Uurloon (€)",
+      "monthlyWage": "Maandloon (€)",
+      "enterWage": "Voer je {{type}} loon in",
+      "wagePerHour": "Loon per uur:",
+      "shifts": {
+        "baseSalary": "Uurloon",
+        "weekdayEarlyMorning": "Maandag t/m vrijdag 00:00 tot 06:00",
+        "weekdayMorning": "Maandag t/m vrijdag 06:00 tot 08:00",
+        "weekdayEvening": "Maandag t/m vrijdag 18:00 tot 22:00",
+        "weekdayNight": "Maandag t/m vrijdag 22:00 tot 24:00",
+        "saturday": "Zaterdag 00:00 tot 24:00",
+        "sundayHoliday": "Zondag en feestdagen 00:00 tot 24:00"
+      }
     }
   },
   "footer": {
