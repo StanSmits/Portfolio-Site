@@ -7,7 +7,7 @@ export const ProfileImage: React.FC = () => {
 
   useEffect(() => {
     const img = new Image();
-    img.src = '/images/image.png'; // Absolute path from public folder
+    img.src = '/images/secondary.jpeg'; // Absolute path from public folder
     img.onload = () => {
       const canvas = document.createElement('canvas');
       canvas.width = 20;
@@ -38,7 +38,7 @@ export const ProfileImage: React.FC = () => {
         />
       )}
       <img
-        src="/images/image.png"
+        src="/images/secondary.jpeg"
         alt="Stan Smits mug shot"
         className={`h-full w-full object-cover transition-opacity duration-500 ${
           imageLoaded ? 'opacity-100' : 'opacity-0'

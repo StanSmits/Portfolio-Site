@@ -11,6 +11,10 @@ export const ParticleOverlay: React.FC<{ mousePosition: { x: number; y: number }
         const translateY = (mousePosition.y / window.innerHeight - 0.5) * 20 * particle.factor;
         const scale = 1 + Math.abs(translateX + translateY) / 400;
 
+        // Ensure particles are only on the outer edges
+        const isInCenter = (particle.x > 25 && particle.x < 75) && (particle.y > 25 && particle.y < 75);
+        if (isInCenter) return null;
+
         return (
           <div
             key={index}
