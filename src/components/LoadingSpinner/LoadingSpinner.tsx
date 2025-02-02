@@ -1,8 +1,12 @@
 import React from 'react';
 
-export const LoadingSpinner: React.FC = () => {
+interface LoadingSpinnerProps {
+  className?: string;
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 backdrop-blur-sm">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 backdrop-blur-sm ${className}`}>
       <div className="relative h-16 w-16">
         <div className="absolute inset-0 animate-spin rounded-full border-4 border-purple-500/20" />
         <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-purple-500" style={{ animationDuration: '1s' }} />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '../LoadingSpinner/Skeleton';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 export const ProfileImage: React.FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -24,7 +25,8 @@ export const ProfileImage: React.FC = () => {
 
   return (
     <div className="relative aspect-square overflow-hidden rounded-full">
-      {!imageLoaded && <Skeleton className="absolute inset-0 rounded-full" />}
+      {!imageLoaded && <Skeleton className="absolute inset-0 rounded-full h-full w-full" />}
+      {!imageLoaded && <LoadingSpinner className="absolute inset-0 rounded-full" />}
       {blurDataURL && (
         <img
           src={blurDataURL}
@@ -45,7 +47,9 @@ export const ProfileImage: React.FC = () => {
         }`}
         loading="lazy"
         onLoad={() => {
-          setImageLoaded(true);
+          setTimeout(() => {
+            setImageLoaded(true);
+          }, 500);
         }}
         onError={() => {
           console.error('Error loading image');
