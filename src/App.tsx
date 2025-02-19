@@ -5,10 +5,10 @@ import { Footer } from "./components/Footer/Footer";
 import { BackgroundGradient } from "./components/BackgroundGradient/BackgroundGradient";
 import { LanguagePrompt } from "./components/LanguagePrompt/LanguagePrompt";
 import TOD from "./components/Tools/ToeslagenOnregelmatigeDienst/TOD";
+import { ToolsList } from "./components/Tools/ToolsList";
 
 // Lazy loaded components
 const Hero = React.lazy(() => import("./components/Hero/Hero"));
-
 const ExperienceSection = React.lazy(
   () => import("./components/Experience/ExperienceSection")
 );
@@ -89,6 +89,7 @@ function App() {
               </Suspense>
             }
           >
+            <Route index element={<ToolsList />} />
             <Route
               path="calculator"
               element={

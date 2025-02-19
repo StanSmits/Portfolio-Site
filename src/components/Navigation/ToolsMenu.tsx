@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-const tools = [
-  { name: 'calculator', path: '/tools/calculator' },
-  { name: 'tod', path: '/tools/tod' },
-];
+import { TOOLS } from '../../utils/constants/tools';
 
 export const ToolsMenu: React.FC = () => {
   const { t } = useTranslation();
@@ -17,13 +13,14 @@ export const ToolsMenu: React.FC = () => {
       </span>
       <div className="absolute w-full grid bottom-full mb-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
         <div className="rounded-lg bg-gray-900/95 p-2 shadow-lg backdrop-blur-sm">
-          {tools.map((tool) => (
+          {TOOLS.map((tool) => (
             <Link
               key={tool.path}
               to={tool.path}
-              className="block px-4 py-2 text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors"
+              className="flex items-center px-4 py-2 text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors"
             >
-              {t(`tools.${tool.name}.title`)}
+              <span className="mr-2">{tool.icon}</span>
+              {t(`tools.${tool.id}.title`)}
             </Link>
           ))}
         </div>

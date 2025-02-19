@@ -17,7 +17,7 @@ const ToolsLayout: React.FC = () => {
           <ArrowLeft className="mr-2" />
           {t('tools.goBack')}
         </button>
-        <h1 className="text-4xl font-bold text-white mt-4">Tools</h1>
+        <h1 className="text-4xl font-bold text-white mt-4">{t('tools.title')}</h1>
       </div>
       <div className="rounded-lg bg-gray-900/50 p-6">
         <Outlet />
