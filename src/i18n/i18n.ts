@@ -28,3 +28,8 @@ i18n
   });
 
 export default i18n;
+const syncDocumentLanguage = (lng: string) => {
+  document.documentElement.lang = lng.startsWith('en') ? 'en' : 'nl';
+};
+syncDocumentLanguage(i18n.resolvedLanguage ?? i18n.language ?? 'nl');
+i18n.on('languageChanged', syncDocumentLanguage);

@@ -1,28 +1,41 @@
-import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { MetaTags } from '../components/SEO/MetaTags';
+import { PageFallback } from '../components/LoadingSpinner/LoadingSpinner';
+import { TOOLS } from '../utils/constants/tools';
 
 const ToolsLayout: React.FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const tool = TOOLS.find((item) => item.path === pathname);
+  const isIndex = pathname.replace(/\/$/, '') === '/tools';
+  const title = tool ? t(`tools.${tool.id}.title`) : t('tools.title');
 
   return (
-    <div className="container mx-auto max-w-screen-lg px-4 py-20">
-      <div className="mb-8">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center text-sm text-gray-300 hover:text-purple-500 focus:outline-none transition-all duration-300 hover:scale-[1.02]"
+    <main id="main-content" tabIndex={-1} className="relative z-10 outline-none">
+      <MetaTags
+        title={`${title} — Stan Smits`}
+        description={tool ? t(`tools.${tool.id}.description`) : undefined}
+        path={pathname}
+      />
+      <div className="shell pb-24 pt-[calc(var(--header-h)+3rem)]">
+        <Link
+          to={isIndex ? '/' : '/tools'}
+          className="inline-flex min-h-[2.75rem] items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
         >
-          <ArrowLeft className="mr-2" />
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           {t('tools.goBack')}
-        </button>
-        <h1 className="text-4xl font-bold text-white mt-4">{t('tools.title')}</h1>
+        </Link>
+        <h1 className="h2 mt-6">{t('tools.title')}</h1>
+        <div className="mt-10">
+          <Suspense fallback={<PageFallback />}>
+            <Outlet />
+          </Suspense>
+        </div>
       </div>
-      <div className="rounded-lg bg-gray-900/50 p-6">
-        <Outlet />
-      </div>
-    </div>
+    </main>
   );
 };
 

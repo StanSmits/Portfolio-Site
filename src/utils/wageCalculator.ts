@@ -21,7 +21,7 @@ const parseShiftLine = (line: string): ShiftData | null => {
   
   if (!match) return null;
   
-  const [_, dateStr, startTime, endTime] = match;
+  const [, dateStr, startTime, endTime] = match;
   const [day, month, year] = dateStr.split('-').map(Number);
   
   const createDateTime = (timeStr: string) => {
@@ -54,7 +54,7 @@ const calculateShiftWage = (shift: ShiftData): { amount: number; detail: string 
   }
 
   let currentTime = new Date(start);
-  let evening = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 18, 0);
+  const evening = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 18, 0);
   
   while (currentTime < end) {
     const hourEnd = new Date(Math.min(end.getTime(), currentTime.getTime() + (60 * 60 * 1000)));

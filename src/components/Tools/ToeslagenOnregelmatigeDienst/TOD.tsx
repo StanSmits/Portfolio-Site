@@ -16,75 +16,74 @@ const TOD: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-900/50 rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-6 text-gray-100">{t('tools.tod.title')}</h1>
-      <div className="mb-6 flex space-x-4">
-        <div
-          className={`flex-1 p-4 rounded-lg cursor-pointer transition-all duration-300 ${
-            isHourly ? 'bg-purple-500 text-white' : 'bg-gray-800 text-gray-300'
-          }`}
-          onClick={() => setIsHourly(true)}
-        >
-          <h2 className="text-xl font-semibold text-center">{t('tools.tod.hourlyWage')}</h2>
-        </div>
-        <div
-          className={`flex-1 p-4 rounded-lg cursor-pointer transition-all duration-300 ${
-            !isHourly ? 'bg-purple-500 text-white' : 'bg-gray-800 text-gray-300'
-          }`}
-          onClick={() => setIsHourly(false)}
-        >
-          <h2 className="text-xl font-semibold text-center">{t('tools.tod.monthlyWage')}</h2>
-        </div>
+    <section className="panel max-w-3xl p-6 sm:p-10" aria-labelledby="tod-title">
+      <h2 id="tod-title" className="h3 mb-3">{t('tools.tod.title')}</h2>
+      <p className="mb-8 text-muted">{t('tools.tod.description')}</p>
+      <div className="mb-8 grid grid-cols-2 gap-2 rounded-2xl border border-line/15 p-1.5" role="group" aria-label={t('tools.tod.wagePerHour')}>
+        {[true, false].map((hourly) => (
+          <button
+            key={String(hourly)}
+            type="button"
+            aria-pressed={isHourly === hourly}
+            onClick={() => setIsHourly(hourly)}
+            className={`min-h-[3rem] rounded-xl px-4 text-sm font-semibold transition-colors duration-300 ${
+              isHourly === hourly ? 'bg-ink text-bg' : 'text-muted hover:bg-surface'
+            }`}
+          >
+            {hourly ? t('tools.tod.hourlyWage') : t('tools.tod.monthlyWage')}
+          </button>
+        ))}
       </div>
       <div className="mb-6">
-        <label htmlFor="wage" className="block text-lg font-medium text-gray-300 mb-2">
+        <label htmlFor="wage" className="mb-2 block text-sm font-medium">
           {isHourly ? t('tools.tod.hourlyWage') : t('tools.tod.monthlyWage')}
         </label>
         <input
           type="number"
           id="wage"
-          className="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-lg p-2"
+          className="field"
+          inputMode="decimal"
           value={wage ?? ''}
           onChange={handleWageChange}
           placeholder={t('tools.tod.enterWage', { type: isHourly ? 'hourly' : 'monthly' })}
         />
       </div>
       <div>
-        <h2 className="text-2xl font-semibold mb-4 text-gray-100">{t('tools.tod.wagePerHour')}</h2>
-        <ul className="space-y-2 text-lg text-gray-300">
+        <h3 className="label mb-4">{t('tools.tod.wagePerHour')}</h3>
+        <ul className="divide-y divide-line/10 border-y border-line/10" aria-live="polite">
             {!isHourly && (
-                <li className="flex justify-between">
+                <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
                 <span>{t('tools.tod.shifts.baseSalary')}</span>
-                <span>€{calculateWage(0)}</span>
+                <span className="font-mono font-semibold">€{calculateWage(0)}</span>
               </li>
             )}
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.weekdayEarlyMorning')}</span>
-            <span>€{calculateWage(40)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(40)}</span>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.weekdayMorning')}</span>
-            <span>€{calculateWage(20)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(20)}</span>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.weekdayEvening')}</span>
-            <span>€{calculateWage(20)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(20)}</span>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.weekdayNight')}</span>
-            <span>€{calculateWage(40)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(40)}</span>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.saturday')}</span>
-            <span>€{calculateWage(40)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(40)}</span>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between gap-4 py-3 text-sm sm:text-base">
             <span>{t('tools.tod.shifts.sundayHoliday')}</span>
-            <span>€{calculateWage(65)}</span>
+            <span className="font-mono font-semibold">€{calculateWage(65)}</span>
           </li>
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
 

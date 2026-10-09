@@ -6,7 +6,7 @@ export const parseShiftLine = (line: string): ShiftData | null => {
   
   if (!match) return null;
   
-  const [_, dateStr, trainingDay, startTime, endTime] = match;
+  const [, dateStr, trainingDay, startTime, endTime] = match;
   const [day, month, year] = dateStr.split('-').map(Number);
   
   const createDateTime = (timeStr: string) => {

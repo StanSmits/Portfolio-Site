@@ -1,75 +1,4 @@
 {
-  "hero": {
-    "title": "Stan Smits",
-    "description": "I am a driven professional with a strong foundation in Computer Science and Web Development, specializing in creating seamless experiences for users. With a background in customer service and public engagement, I combine technical expertise with exceptional interpersonal skills to deliver innovative and personalized solutions."
-  },
-  "sections": {
-    "education": "Education",
-    "experience": "Experience",
-    "contact": "Let's Connect"
-  },
-  "education": {
-    "computerScience": {
-      "title": "Computer Science",
-      "institution": "Hogeschool Leiden",
-      "period": "2021 - 2024",
-      "description": "Specialized in software engineering and computer science."
-    },
-    "highSchool": {
-      "title": "High School (HAVO)",
-      "institution": "Fioretti College Lisse",
-      "period": "- 2016",
-      "description": "Graduated with a strong foundation in mathematics and science."
-    },
-    "bio": {
-      "title": "BIO (BOA in training)",
-      "institution": "Municipality of Amsterdam",
-      "period": "2025 - Present",
-      "description": "Ensuring a safe, clean, and pleasant public environment in Amsterdam by collaborating with residents and enforcing regulations where needed."
-    }
-  },
-  "experience": {
-    "enforcer": {
-      "title": "Public Space Enforcer",
-      "company": "Municipality of Amsterdam",
-      "period": "2025 - Present",
-      "description": "Tasked with maintaining public safety and enforcing municipal regulations, ensuring a safe and pleasant environment for all residents and visitors in Amsterdam. This role involves patrolling public spaces, handling disputes, and promoting community engagement."
-    },
-    "driver": {
-      "title": "Delivery Driver",
-      "company": "Amazon",
-      "period": "2024 - 2025",
-      "description": "Delivered packages to customers in a timely and professional manner, ensuring that all items arrived safely and on time. Responsibilities included planning routes, loading and unloading vehicles, and providing excellent customer service."
-    },
-    "installer": {
-      "title": "Heat Pump Installer",
-      "company": "Eco-Electric",
-      "period": "2024 - 2024",
-      "description": "Installed and maintained heat pumps for residential and commercial clients, ensuring that systems were operating efficiently and safely. Responsibilities included diagnosing issues, performing repairs, and providing excellent customer service."
-    },
-    "specialist": {
-      "title": "Specialist",
-      "company": "Apple",
-      "period": "2022 - 2024",
-      "description": "Provided a unique, personalized experience to every customer, embodying Apple's standard of excellence. Responsibilities included greeting guests, understanding their needs, and offering tailored solutions to enhance their interaction with Apple products and services."
-    },
-    "customerService": {
-      "title": "Customer Service Representative",
-      "company": "Albert Heijn",
-      "period": "2020 - 2022",
-      "description": "Delivered exceptional customer service by resolving issues, ensuring satisfaction, and contributing to process improvements to enhance the shopping experience."
-    },
-    "allRound": {
-      "title": "All-round Employee",
-      "company": "Hema",
-      "period": "2019 - 2020",
-      "description": "Performed a variety of tasks, including customer service, restocking, and cashiering, to ensure the store ran smoothly and customers received the best possible service."
-    }
-  },
-  "contact": {
-    "linkedin": "LinkedIn",
-    "email": "Email"
-  },
   "tools": {
     "title": "Tools",
     "goBack": "Go back",
@@ -103,8 +32,11 @@
     "home": "Home",
     "tools": "Tools",
     "language": "Language",
-    "copyright": "© {year} Stan Smits",
-    "latestCommit": "Latest commit: "
+    "copyright": "© {{year}} Stan Smits",
+    "latestCommit": "Latest commit: ",
+    "backToTop": "Back to top",
+    "source": "Source on GitHub",
+    "elsewhere": "Elsewhere"
   },
   "languagePrompt": {
     "select": "Select your preferred language:",
@@ -112,15 +44,102 @@
     "dutch": "Dutch"
   },
   "notFound": {
-    "title": "404 - Page Not Found",
+    "title": "Page not found",
     "description": "The page you are looking for does not exist.",
     "homeLink": "Go back to the homepage"
   },
   "accessibility": {
     "skipToContent": "Skip to main content"
   },
+  "nav": {
+    "primary": "Primary",
+    "home": "Stan Smits — home",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "themeToDark": "Switch to dark theme",
+    "themeToLight": "Switch to light theme",
+    "languageSwitch": "Nederlands",
+    "languageSwitchLabel": "Switch language to Dutch"
+  },
+  "hero": {
+    "eyebrow": "Developer · Public space enforcer",
+    "title": "Stan Smits",
+    "statement": "I build focused software for real-world work — tools that turn rules and structured input into something people can rely on.",
+    "ctaWork": "See selected work",
+    "ctaContact": "Get in touch",
+    "location": "Based in Amsterdam",
+    "scroll": "Scroll",
+    "sceneLoading": "Shaping the scene…",
+    "sceneFallback": "Static view"
+  },
+  "work": {
+    "label": "Selected work",
+    "title": "Work",
+    "intro": "One product in active use, a few small tools built for my own shifts, and the site you are looking at.",
+    "featured": "Featured project",
+    "readCase": "Read the case study",
+    "illustration": "Interface illustration",
+    "role": "Role",
+    "year": "Year",
+    "stack": "Built with",
+    "smallTools": "Also built",
+    "close": "Close",
+    "openExternal": "opens in a new tab"
+  },
+  "about": {
+    "label": "About",
+    "title": "Two jobs, one habit.",
+    "p1": "Most days I work in Amsterdam’s public space as a public space enforcer — patrolling, handling disputes and talking with residents and visitors.",
+    "p2": "Alongside that, I build software. The habit that connects both is noticing where work could be simpler, and then building the tool for it.",
+    "p3": "Years in customer-facing roles, from Albert Heijn to Apple, taught me to start with the person who will actually use the thing.",
+    "portraitAlt": "Portrait of Stan Smits",
+    "facts": {
+      "based": "Based in",
+      "now": "Currently",
+      "studied": "Studied",
+      "builds": "Builds with"
+    }
+  },
+  "experience": {
+    "label": "Experience",
+    "title": "Experience",
+    "intro": "Work across retail, technical installation, logistics and public safety — with Computer Science at Hogeschool Leiden along the way.",
+    "work": "Work",
+    "education": "Education",
+    "showMore": "Read more",
+    "showLess": "Show less"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let’s talk.",
+    "intro": "A question about a project, one of the tools, or working together? Send a message, or email me directly.",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "form": {
+      "title": "Send a message",
+      "name": "Name",
+      "email": "Email address",
+      "message": "Message",
+      "send": "Send message",
+      "sending": "Sending…",
+      "successTitle": "Message sent.",
+      "successBody": "Thanks — I’ll reply to the address you gave.",
+      "another": "Send another message",
+      "required": "This field is required.",
+      "emailInvalid": "Enter a valid email address, like name@example.com.",
+      "messageShort": "Please write at least 10 characters.",
+      "tooLong": "This is too long.",
+      "failed": "The message could not be sent. Please try again, or email me directly.",
+      "notConfigured": "The contact form isn’t available right now. Please email me directly instead.",
+      "rateLimited": "Too many messages in a short time. Please try again later, or email me directly.",
+      "errorSummary": "Please fix the highlighted fields.",
+      "fallback": "Prefer email?",
+      "privacy": "Your details are only used to reply to your message."
+    }
+  },
   "meta": {
-    "title": "Stan Smits - Software Developer & Public Safety Professional",
-    "description": "Professional portfolio of Stan Smits, showcasing expertise in Computer Science, Web Development, and Public Safety."
+    "title": "Stan Smits — Software developer & public space enforcer, Amsterdam",
+    "description": "Portfolio of Stan Smits, a software developer and public space enforcer in Amsterdam who builds focused tools for real workflows, including the RvW Generator."
   }
 }
