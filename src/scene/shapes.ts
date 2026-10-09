@@ -1,4 +1,3 @@
-import { BufferAttribute, BufferGeometry, SphereGeometry } from 'three';
 import { createNoise3D, fbm } from './noise';
 
 /**
@@ -13,9 +12,17 @@ import { createNoise3D, fbm } from './noise';
  *
  * Latitude rings are distributed per slab so that slab faces, edges and walls
  * land on exact rings, which keeps the architectural edges crisp.
+ *
+ * This module is pure math (no three.js, no DOM) so it can run inside a Web Worker.
  */
 
-export const MORPH = { stack: 0, exploded: 1, calm: 2 } as const;
+export interface SculptureData {
+  index: Uint32Array;
+  uv: Float32Array;
+  /** [stone, stack, exploded, calm] */
+  positions: [Float32Array, Float32Array, Float32Array, Float32Array];
+  normals: [Float32Array, Float32Array, Float32Array, Float32Array];
+}
 
 const SLAB_COUNT = 7;
 const SUPERELLIPSE_N = 4.6;
@@ -64,21 +71,18 @@ function layoutSlabs(totalHeight: number, gap: number, spread: number, twist: nu
 
 const sgnPow = (v: number, p: number) => Math.sign(v) * Math.pow(Math.abs(v), p);
 
-export interface SculptureGeometry {
-  geometry: BufferGeometry;
-  dispose: () => void;
-}
-
-export function createSculptureGeometry(widthSegments: number, ringsPerSlab: number): SculptureGeometry {
+/** Builds all four layouts. Vertex order and winding match THREE.SphereGeometry. */
+export function buildSculptureData(widthSegments: number, ringsPerSlab: number): SculptureData {
   const heightSegments = SLAB_COUNT * ringsPerSlab;
-  const sphere = new SphereGeometry(1, widthSegments, heightSegments);
-  const count = sphere.attributes.position.count;
+  const row = widthSegments + 1;
+  const count = row * (heightSegments + 1);
   const noise = createNoise3D(11);
 
   const stone = new Float32Array(count * 3);
   const stack = new Float32Array(count * 3);
   const exploded = new Float32Array(count * 3);
   const calm = new Float32Array(count * 3);
+  const uv = new Float32Array(count * 2);
 
   const compactSlabs = layoutSlabs(2.15, 0.012, 0.04, 1, 1);
   const explodedSlabs = layoutSlabs(3.1, 0.3, 0.3, 2.4, 0.86);
@@ -129,15 +133,20 @@ export function createSculptureGeometry(widthSegments: number, ringsPerSlab: num
   };
 
   for (let iy = 0; iy <= heightSegments; iy++) {
-    const theta = (iy / heightSegments) * Math.PI;
+    const v = iy / heightSegments;
+    const theta = v * Math.PI;
     for (let ix = 0; ix <= widthSegments; ix++) {
-      const i = iy * (widthSegments + 1) + ix;
-      const phi = (ix / widthSegments) * Math.PI * 2;
+      const i = iy * row + ix;
+      const u = ix / widthSegments;
+      const phi = u * Math.PI * 2;
       const dx = -Math.cos(phi) * Math.sin(theta);
       const dy = Math.cos(theta);
       const dz = Math.sin(phi) * Math.sin(theta);
 
-      // Stone: low-frequency fbm displacement with a slight lean.
+      uv[i * 2] = u;
+      uv[i * 2 + 1] = 1 - v;
+
+      // Stone: low-frequency displacement with a slight lean.
       const rs = 1 + 0.14 * noise(dx * 0.85, dy * 0.85, dz * 0.85) + 0.035 * noise(dx * 2.1 + 9, dy * 2.1, dz * 2.1);
       stone[i * 3] = dx * rs * 1.12 + dy * 0.1;
       stone[i * 3 + 1] = dy * rs * 0.94;
@@ -154,50 +163,56 @@ export function createSculptureGeometry(widthSegments: number, ringsPerSlab: num
     }
   }
 
-  const index = sphere.getIndex();
-  const normalsFor = (positions: Float32Array) => {
-    const tmp = new BufferGeometry();
-    tmp.setIndex(index);
-    tmp.setAttribute('position', new BufferAttribute(positions, 3));
-    tmp.computeVertexNormals();
-    const normals = (tmp.getAttribute('normal') as BufferAttribute).array as Float32Array;
-    weldNormals(normals, widthSegments, heightSegments);
-    tmp.dispose();
-    return normals;
-  };
+  // Index buffer (same triangulation as THREE.SphereGeometry, without degenerate pole triangles).
+  const indices: number[] = [];
+  for (let iy = 0; iy < heightSegments; iy++) {
+    for (let ix = 0; ix < widthSegments; ix++) {
+      const a = iy * row + ix + 1;
+      const b = iy * row + ix;
+      const c = (iy + 1) * row + ix;
+      const d = (iy + 1) * row + ix + 1;
+      if (iy !== 0) indices.push(a, b, d);
+      if (iy !== heightSegments - 1) indices.push(b, c, d);
+    }
+  }
+  const index = new Uint32Array(indices);
 
-  const geometry = new BufferGeometry();
-  geometry.setIndex(index);
-  geometry.setAttribute('position', new BufferAttribute(stone, 3));
-  geometry.setAttribute('normal', new BufferAttribute(normalsFor(stone), 3));
-  geometry.setAttribute('uv', sphere.getAttribute('uv'));
-  geometry.morphAttributes.position = [
-    new BufferAttribute(stack, 3),
-    new BufferAttribute(exploded, 3),
-    new BufferAttribute(calm, 3),
-  ];
-  geometry.morphAttributes.normal = [
-    new BufferAttribute(normalsFor(stack), 3),
-    new BufferAttribute(normalsFor(exploded), 3),
-    new BufferAttribute(normalsFor(calm), 3),
-  ];
-  geometry.computeBoundingSphere();
-  if (geometry.boundingSphere) geometry.boundingSphere.radius = 2.4;
-  sphere.dispose();
-
-  return { geometry, dispose: () => geometry.dispose() };
+  const positions: SculptureData['positions'] = [stone, stack, exploded, calm];
+  const normals = positions.map((p) => computeNormals(p, index, widthSegments, heightSegments)) as SculptureData['normals'];
+  return { index, uv, positions, normals };
 }
 
-/** Average normals across the UV seam and at the poles, which are duplicated vertices. */
-function weldNormals(normals: Float32Array, w: number, h: number) {
+/** Area-weighted vertex normals, welded across the UV seam and at the poles. */
+function computeNormals(positions: Float32Array, index: Uint32Array, w: number, h: number): Float32Array {
+  const normals = new Float32Array(positions.length);
+  for (let t = 0; t < index.length; t += 3) {
+    const a = index[t] * 3;
+    const b = index[t + 1] * 3;
+    const c = index[t + 2] * 3;
+    const cbx = positions[c] - positions[b];
+    const cby = positions[c + 1] - positions[b + 1];
+    const cbz = positions[c + 2] - positions[b + 2];
+    const abx = positions[a] - positions[b];
+    const aby = positions[a + 1] - positions[b + 1];
+    const abz = positions[a + 2] - positions[b + 2];
+    const nx = cby * abz - cbz * aby;
+    const ny = cbz * abx - cbx * abz;
+    const nz = cbx * aby - cby * abx;
+    for (const v of [a, b, c]) {
+      normals[v] += nx;
+      normals[v + 1] += ny;
+      normals[v + 2] += nz;
+    }
+  }
+
   const row = w + 1;
   for (let iy = 0; iy <= h; iy++) {
     const a = iy * row * 3;
     const b = (iy * row + w) * 3;
     for (let c = 0; c < 3; c++) {
-      const avg = (normals[a + c] + normals[b + c]) / 2;
-      normals[a + c] = avg;
-      normals[b + c] = avg;
+      const sum = normals[a + c] + normals[b + c];
+      normals[a + c] = sum;
+      normals[b + c] = sum;
     }
   }
   for (const iy of [0, h]) {
@@ -210,12 +225,11 @@ function weldNormals(normals: Float32Array, w: number, h: number) {
       y += normals[o + 1];
       z += normals[o + 2];
     }
-    const len = Math.hypot(x, y, z) || 1;
     for (let ix = 0; ix <= w; ix++) {
       const o = (iy * row + ix) * 3;
-      normals[o] = x / len;
-      normals[o + 1] = y / len;
-      normals[o + 2] = z / len;
+      normals[o] = x;
+      normals[o + 1] = y;
+      normals[o + 2] = z;
     }
   }
   for (let i = 0; i < normals.length; i += 3) {
@@ -224,4 +238,29 @@ function weldNormals(normals: Float32Array, w: number, h: number) {
     normals[i + 1] /= len;
     normals[i + 2] /= len;
   }
+  return normals;
+}
+
+/** Tileable grayscale grain (RGBA bytes) used as a subtle roughness/bump texture. */
+export function buildGrainData(size: number): Uint8Array {
+  const data = new Uint8Array(size * size * 4);
+  const noise = createNoise3D(3);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      // Tileable by sampling a torus in 3D noise space.
+      const u = (x / size) * Math.PI * 2;
+      const v = (y / size) * Math.PI * 2;
+      const nx = Math.cos(u) * 2.2;
+      const ny = Math.sin(u) * 2.2;
+      const nz = Math.cos(v) * 2.2 + Math.sin(v) * 1.3;
+      const n = 0.6 * noise(nx * 2, ny * 2, nz * 2) + 0.4 * noise(nx * 7, ny * 7, nz * 7 + Math.sin(v) * 3);
+      const value = Math.round(Math.min(1, Math.max(0, 0.86 + n * 0.14)) * 255);
+      const o = (y * size + x) * 4;
+      data[o] = value;
+      data[o + 1] = value;
+      data[o + 2] = value;
+      data[o + 3] = 255;
+    }
+  }
+  return data;
 }

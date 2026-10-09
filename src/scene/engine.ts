@@ -3,6 +3,7 @@ import {
   BufferAttribute,
   BufferGeometry,
   CanvasTexture,
+  DataTexture,
   Color,
   DirectionalLight,
   Fog,
@@ -35,11 +36,12 @@ import {
   chapterProgress,
   cloneState,
   lerp,
+  MORPH,
   type ChapterState,
 } from './choreography';
-import { createNoise3D } from './noise';
 import { PALETTES, type ScenePalette } from './palettes';
-import { createSculptureGeometry, MORPH } from './shapes';
+import type { SculptureData } from './shapes';
+import { loadSculptureAssets, type SculptureAssets } from './sculptureData';
 
 export interface SceneEngineOptions {
   container: HTMLElement;
@@ -52,10 +54,20 @@ export interface SceneEngineOptions {
   onFailure: (reason: string) => void;
 }
 
-const TIERS: Record<QualityTier, { segments: number; rings: number; maxDpr: number; antialias: boolean }> = {
-  high: { segments: 192, rings: 20, maxDpr: 2, antialias: true },
-  medium: { segments: 128, rings: 14, maxDpr: 1.5, antialias: true },
-  low: { segments: 96, rings: 10, maxDpr: 1, antialias: false },
+interface TierSettings {
+  segments: number;
+  rings: number;
+  maxDpr: number;
+  antialias: boolean;
+  grainSize: number;
+  /** Image-based lighting (PMREM). Subtle, but costs a few hundred ms to prepare on weak devices. */
+  environment: boolean;
+}
+
+const TIERS: Record<QualityTier, TierSettings> = {
+  high: { segments: 192, rings: 20, maxDpr: 2, antialias: true, grainSize: 256, environment: true },
+  medium: { segments: 128, rings: 14, maxDpr: 1.5, antialias: true, grainSize: 128, environment: false },
+  low: { segments: 96, rings: 10, maxDpr: 1, antialias: false, grainSize: 0, environment: false },
 };
 
 const FOV = 30;
@@ -166,9 +178,9 @@ export class SceneEngine {
   private readonly key: DirectionalLight;
   private readonly rim: DirectionalLight;
   private readonly disposables: { dispose: () => void }[] = [];
-  private readonly envTexture: Texture;
+  private readonly envTexture: Texture | null = null;
 
-  private readonly ambient: boolean;
+  private ambient: boolean;
   private readonly interactive: boolean;
   private palette: LivePalette;
   private paletteTarget: LivePalette;
@@ -194,10 +206,11 @@ export class SceneEngine {
   private anchors: (HTMLElement | null)[] = [];
   private slowFrames = 0;
   private frameSamples = 0;
+  private renderCost = 0;
 
   private readonly tmpObject = new Object3D();
 
-  constructor(opts: SceneEngineOptions) {
+  constructor(opts: SceneEngineOptions, assets: SculptureAssets) {
     this.opts = opts;
     const tier = TIERS[opts.tier];
     this.ambient = opts.finePointer && !opts.reducedMotion && opts.tier !== 'low';
@@ -222,15 +235,18 @@ export class SceneEngine {
     this.palette = toLivePalette(PALETTES[opts.theme]);
     this.paletteTarget = toLivePalette(PALETTES[opts.theme]);
 
-    // Image-based lighting from a procedural room: soft, believable reflections, no downloads.
-    const pmrem = new PMREMGenerator(this.renderer);
-    const room = new RoomEnvironment();
-    this.envTexture = pmrem.fromScene(room, 0.04).texture;
-    room.dispose();
-    pmrem.dispose();
-    this.scene.environment = this.envTexture;
-    this.disposables.push(this.envTexture);
-
+    performance.mark('scene:renderer');
+    if (tier.environment) {
+      // Image-based lighting from a procedural room: soft, believable reflections, no downloads.
+      const pmrem = new PMREMGenerator(this.renderer);
+      const room = new RoomEnvironment();
+      this.envTexture = pmrem.fromScene(room, 0.04).texture;
+      room.dispose();
+      pmrem.dispose();
+      this.scene.environment = this.envTexture;
+      this.disposables.push(this.envTexture);
+    }
+    performance.mark('scene:environment');
     this.scene.fog = new Fog(this.palette.fog, this.palette.fogNear, this.palette.fogFar);
 
     // Lights
@@ -242,10 +258,11 @@ export class SceneEngine {
     this.scene.add(this.hemi, this.key, this.rim);
 
     // Sculpture
-    const grain = createGrainTexture();
-    this.disposables.push(grain);
-    const { geometry, dispose } = createSculptureGeometry(tier.segments, tier.rings);
-    this.disposables.push({ dispose });
+    const grain = assets.grain ? createGrainTexture(assets.grain, tier.grainSize) : null;
+    if (grain) this.disposables.push(grain);
+    const geometry = createSculptureGeometry(assets.data);
+    this.disposables.push(geometry);
+    performance.mark('scene:geometry');
     this.material = new MeshStandardMaterial({
       color: this.palette.stone,
       roughness: this.palette.roughness,
@@ -317,6 +334,7 @@ export class SceneEngine {
     } catch {
       // compileAsync is an optimisation; rendering compiles synchronously if it fails.
     }
+    performance.mark('scene:compiled');
     if (this.disposed) return;
     this.requestFrame();
   }
@@ -575,9 +593,12 @@ export class SceneEngine {
     if (this.ambient) this.ambientTime += dt;
 
     this.apply();
+    const renderStart = performance.now();
     this.renderer.render(this.scene, this.camera);
+    this.renderCost = lerp(this.renderCost, performance.now() - renderStart, this.firstFrame ? 1 : 0.1);
 
     if (this.firstFrame) {
+      performance.mark('scene:first-frame');
       this.firstFrame = false;
       this.opts.onReady();
     }
@@ -646,7 +667,8 @@ export class SceneEngine {
     this.rim.intensity = p.rimIntensity * (1 + hover * 0.5);
     this.hemi.color.copy(p.hemiSky);
     this.hemi.groundColor.copy(p.hemiGround);
-    this.hemi.intensity = p.hemiIntensity;
+    // Without image-based lighting, lift the hemisphere fill to keep the same overall exposure.
+    this.hemi.intensity = p.hemiIntensity * (this.envTexture ? 1 : 1.4);
 
     const fog = this.scene.fog as Fog;
     fog.color.copy(p.fog);
@@ -688,7 +710,7 @@ export class SceneEngine {
   private trackPerformance(dt: number) {
     this.frameSamples++;
     if (dt > 1 / 42) this.slowFrames++;
-    if (this.frameSamples < 90) return;
+    if (this.frameSamples < 60) return;
     const slowShare = this.slowFrames / this.frameSamples;
     this.frameSamples = 0;
     this.slowFrames = 0;
@@ -697,40 +719,31 @@ export class SceneEngine {
       this.renderer.setPixelRatio(this.dpr);
       this.renderer.setSize(this.width, this.height, false);
     }
+    // If drawing itself blocks the main thread (weak or software GPU), stop the idle
+    // animation and only render in response to scroll, pointer and theme changes.
+    if (this.ambient && this.renderCost > 12 && this.dpr <= 1) this.ambient = false;
   }
 }
 
-function createGrainTexture(): CanvasTexture {
-  const size = 256;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d')!;
-  const image = ctx.createImageData(size, size);
-  const noise = createNoise3D(3);
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      // Tileable by sampling a torus in 3D noise space.
-      const u = (x / size) * Math.PI * 2;
-      const v = (y / size) * Math.PI * 2;
-      const nx = Math.cos(u) * 2.2;
-      const ny = Math.sin(u) * 2.2;
-      const nz = Math.cos(v) * 2.2 + Math.sin(v) * 1.3;
-      const n = 0.6 * noise(nx * 2, ny * 2, nz * 2) + 0.4 * noise(nx * 7, ny * 7, nz * 7 + Math.sin(v) * 3);
-      const value = Math.round(MathUtils.clamp(0.86 + n * 0.14, 0, 1) * 255);
-      const o = (y * size + x) * 4;
-      image.data[o] = value;
-      image.data[o + 1] = value;
-      image.data[o + 2] = value;
-      image.data[o + 3] = 255;
-    }
-  }
-  ctx.putImageData(image, 0, 0);
-  const texture = new CanvasTexture(canvas);
+function createGrainTexture(data: Uint8Array, size: number): DataTexture {
+  const texture = new DataTexture(data, size, size);
   texture.wrapS = RepeatWrapping;
   texture.wrapT = RepeatWrapping;
   texture.repeat.set(5, 3);
+  texture.generateMipmaps = true;
+  texture.needsUpdate = true;
   return texture;
+}
+
+function createSculptureGeometry(data: SculptureData): BufferGeometry {
+  const geometry = new BufferGeometry();
+  geometry.setIndex(new BufferAttribute(data.index, 1));
+  geometry.setAttribute('position', new BufferAttribute(data.positions[0], 3));
+  geometry.setAttribute('normal', new BufferAttribute(data.normals[0], 3));
+  geometry.setAttribute('uv', new BufferAttribute(data.uv, 2));
+  geometry.morphAttributes.position = data.positions.slice(1).map((p) => new BufferAttribute(p, 3));
+  geometry.morphAttributes.normal = data.normals.slice(1).map((n) => new BufferAttribute(n, 3));
+  return geometry;
 }
 
 function createRadialTexture(): CanvasTexture {
@@ -762,6 +775,14 @@ function createGridGeometry(): BufferGeometry {
   return geometry;
 }
 
-export function createSceneEngine(opts: SceneEngineOptions): SceneEngine {
-  return new SceneEngine(opts);
+/** Prepares geometry off the main thread, then builds the engine. */
+export async function createSceneEngine(opts: SceneEngineOptions): Promise<SceneEngine> {
+  const tier = TIERS[opts.tier];
+  const assets = await loadSculptureAssets({
+    segments: tier.segments,
+    rings: tier.rings,
+    grainSize: tier.grainSize,
+  });
+  performance.mark('scene:assets');
+  return new SceneEngine(opts, assets);
 }

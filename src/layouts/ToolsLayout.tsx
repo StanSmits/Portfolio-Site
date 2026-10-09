@@ -1,9 +1,7 @@
-import { Suspense } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { MetaTags } from '../components/SEO/MetaTags';
-import { PageFallback } from '../components/LoadingSpinner/LoadingSpinner';
 import { TOOLS } from '../utils/constants/tools';
 
 const ToolsLayout: React.FC = () => {
@@ -30,9 +28,7 @@ const ToolsLayout: React.FC = () => {
         </Link>
         <h1 className="h2 mt-6">{t('tools.title')}</h1>
         <div className="mt-10">
-          <Suspense fallback={<PageFallback />}>
-            <Outlet />
-          </Suspense>
+          <Outlet />
         </div>
       </div>
     </main>

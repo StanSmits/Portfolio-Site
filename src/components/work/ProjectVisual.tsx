@@ -26,7 +26,7 @@ function RvwIllustration() {
   return (
     <div className="relative h-full w-full" style={{ transformStyle: 'preserve-3d' }} aria-hidden="true">
       {/* Search pane */}
-      <div className="absolute left-[6%] top-[9%] w-[52%] rounded-2xl border border-line/10 bg-bg-elevated p-4 shadow-[var(--card-shadow)] depth-1">
+      <div className="absolute left-[5%] top-[6%] w-[70%] rounded-2xl sm:left-[6%] sm:top-[9%] sm:w-[52%] border border-line/10 bg-bg-elevated p-4 shadow-[var(--card-shadow)] depth-1">
         <div className="flex items-center gap-2 rounded-xl border border-line/15 bg-bg px-3 py-2.5">
           <span className="h-3 w-3 rounded-full border-2 border-ink/40" />
           {bar('42%')}
@@ -47,7 +47,7 @@ function RvwIllustration() {
       </div>
 
       {/* Form pane */}
-      <div className="absolute right-[5%] top-[22%] w-[48%] rounded-2xl border border-line/10 bg-bg-elevated p-4 shadow-[var(--card-shadow)] depth-2">
+      <div className="absolute right-[4%] top-[34%] w-[66%] rounded-2xl sm:right-[5%] sm:top-[22%] sm:w-[48%] border border-line/10 bg-bg-elevated p-4 shadow-[var(--card-shadow)] depth-2">
         <p className="label !text-[0.55rem]">Feitcode</p>
         <div className="mt-3 space-y-3">
           <div className="rounded-lg border border-line/15 px-3 py-2">{bar('55%')}</div>
@@ -71,7 +71,7 @@ function RvwIllustration() {
       </div>
 
       {/* Output pane */}
-      <div className="absolute bottom-[7%] left-[14%] w-[60%] rounded-2xl bg-ink p-4 text-bg shadow-[var(--card-shadow)] depth-2">
+      <div className="absolute bottom-[5%] left-[5%] w-[62%] rounded-2xl bg-ink sm:bottom-[7%] sm:left-[14%] sm:w-[60%] p-4 text-bg shadow-[var(--card-shadow)] depth-2">
         <div className="space-y-2">
           {['92%', '86%', '95%', '60%'].map((w, i) => (
             <span key={i} className="block h-1.5 rounded-full bg-bg/30" style={{ width: w }} />
@@ -123,7 +123,7 @@ function WageIllustration() {
 function SiteIllustration() {
   return (
     <div className="grid h-full place-items-center" aria-hidden="true">
-      <div className="sculpture" style={{ '--size': '9rem', width: '9rem' } as CSSProperties}>
+      <div className="sculpture scale-75" style={{ '--size': '9rem', width: '9rem' } as CSSProperties}>
         <div className="sculpture-stack">
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="sculpture-slab" style={{ '--i': i } as CSSProperties} />

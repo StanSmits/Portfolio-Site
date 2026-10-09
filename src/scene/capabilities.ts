@@ -30,11 +30,19 @@ export function detectWebGL(): boolean {
       (canvas.getContext('webgl2', attributes) as WebGL2RenderingContext | null) ??
       (canvas.getContext('webgl', attributes) as WebGLRenderingContext | null);
     if (!gl) return false;
+    const software = isSoftwareRenderer(gl);
     gl.getExtension('WEBGL_lose_context')?.loseContext();
-    return true;
+    return !software;
   } catch {
     return false;
   }
+}
+
+/** CPU rasterisers (SwiftShader, llvmpipe…) would make every frame block the main thread. */
+function isSoftwareRenderer(gl: WebGLRenderingContext | WebGL2RenderingContext): boolean {
+  const info = gl.getExtension('WEBGL_debug_renderer_info');
+  const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+  return /swiftshader|llvmpipe|softpipe|software|basic render driver/i.test(renderer);
 }
 
 export function detectCapabilities(): SceneCapabilities {

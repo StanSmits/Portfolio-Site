@@ -20,14 +20,14 @@ export function HeroSection() {
             <span className="h-px w-8 bg-line/40" aria-hidden="true" />
             {t('hero.eyebrow')}
           </p>
-          <h1 id="hero-title" className="display mt-6" data-hero-item style={{ '--d': '80ms' } as React.CSSProperties}>
+          <h1 id="hero-title" className="display mt-6" data-hero-item style={{ '--d': '40ms' } as React.CSSProperties}>
             <span className="block">Stan</span>
             <span className="block pl-[0.6em] lg:pl-[0.9em]">Smits</span>
           </h1>
-          <p className="lead mt-8 max-w-[34ch] text-ink/80" data-hero-item style={{ '--d': '180ms' } as React.CSSProperties}>
+          <p className="lead mt-8 max-w-[34ch] text-ink/80" data-hero-item style={{ '--d': '90ms' } as React.CSSProperties}>
             {t('hero.statement')}
           </p>
-          <div className="mt-9 flex flex-wrap gap-3" data-hero-item style={{ '--d': '260ms' } as React.CSSProperties}>
+          <div className="mt-9 flex flex-wrap gap-3" data-hero-item style={{ '--d': '140ms' } as React.CSSProperties}>
             <a href="#work" className="btn btn-primary">
               {t('hero.ctaWork')}
               <ArrowDown className="btn-arrow h-4 w-4" aria-hidden="true" />
@@ -37,7 +37,7 @@ export function HeroSection() {
               <ArrowRight className="btn-arrow h-4 w-4" aria-hidden="true" />
             </a>
           </div>
-          <p className="mt-10 flex items-center gap-3 text-sm text-muted" data-hero-item style={{ '--d': '340ms' } as React.CSSProperties}>
+          <p className="mt-10 flex items-center gap-3 text-sm text-muted" data-hero-item style={{ '--d': '190ms' } as React.CSSProperties}>
             <span className="dot" aria-hidden="true" />
             {t('hero.location')}
           </p>

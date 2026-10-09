@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { PROFILE } from '../../content/profile';
 import { TOOLS } from '../../utils/constants/tools';
 import { useLatestCommit } from '../../hooks/useLatestCommit';
+import { useLang } from '../../i18n/useLang';
 
 export function SiteFooter() {
   const { t } = useTranslation();
   const commit = useLatestCommit();
+  const { pick } = useLang();
   const year = new Date().getFullYear();
 
   return (
@@ -55,7 +57,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell flex items-center justify-between border-t border-line/10 py-5 text-xs text-subtle">
-        <span>{PROFILE.location.en}</span>
+        <span>{pick(PROFILE.location)}</span>
         <a href="#top" className="inline-flex min-h-[2.75rem] items-center gap-2 hover:text-ink" onClick={(event) => {
           if (window.location.pathname !== '/') return;
           event.preventDefault();

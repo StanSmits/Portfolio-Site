@@ -71,7 +71,7 @@ export function FeaturedProject({ project }: { project: Project }) {
         </div>
       </div>
 
-      <figure className="relative min-h-[22rem] border-t border-line/10 bg-surface/70 sm:min-h-[28rem] lg:col-span-7 lg:border-l lg:border-t-0">
+      <figure className="relative min-h-[27rem] border-t border-line/10 bg-surface/70 sm:min-h-[28rem] lg:col-span-7 lg:border-l lg:border-t-0">
         <div
           ref={tilt.ref}
           onPointerMove={tilt.onPointerMove}

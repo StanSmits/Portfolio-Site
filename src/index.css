@@ -55,7 +55,7 @@
   --line: 37 36 33;
   --ink: 29 28 25; /* graphite    */
   --muted: 88 84 77;
-  --subtle: 110 105 97;
+  --subtle: 98 93 85;
   --accent: 160 78 42; /* fired clay — used sparingly */
   --signal: 196 214 40; /* hi-vis — tiny markers only */
   --danger: 168 44 32;
@@ -604,7 +604,7 @@ dialog.sheet::backdrop {
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {
   [data-hero-item] {
-    animation: hero-in 1100ms var(--ease-out) both;
+    animation: hero-in 900ms var(--ease-out) both;
     animation-delay: var(--d, 0ms);
   }
   .scroll-cue {

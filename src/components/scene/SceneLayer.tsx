@@ -49,7 +49,7 @@ export function SceneProvider({ children }: { children: ReactNode }) {
         const { createSceneEngine } = await import('../../scene/engine');
         if (cancelled) return;
         const forced = new URLSearchParams(window.location.search).get('scene') === 'force';
-        engine = createSceneEngine({
+        engine = await createSceneEngine({
           container,
           theme: themeRef.current,
           tier: capabilities.tier,
@@ -63,6 +63,10 @@ export function SceneProvider({ children }: { children: ReactNode }) {
           },
           onFailure: fail,
         });
+        if (cancelled) {
+          engine.dispose();
+          return;
+        }
         engineRef.current = engine;
         if (import.meta.env.DEV) (window as unknown as { __scene?: SceneEngine }).__scene = engine;
         await engine.start();

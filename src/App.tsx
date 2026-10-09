@@ -8,15 +8,16 @@ import { LanguagePrompt } from './components/LanguagePrompt/LanguagePrompt';
 import { PageFallback } from './components/LoadingSpinner/LoadingSpinner';
 import HomePage from './pages/HomePage';
 import { ToolsList } from './components/Tools/ToolsList';
+// The tool pages are a few kilobytes; loading them eagerly avoids layout shift from nested fallbacks.
+import ToolsLayout from './layouts/ToolsLayout';
+import Calculator from './components/Tools/Calculator';
+import TOD from './components/Tools/ToeslagenOnregelmatigeDienst/TOD';
 
-const ToolsLayout = lazy(() => import('./layouts/ToolsLayout'));
-const Calculator = lazy(() => import('./components/Tools/Calculator'));
-const TOD = lazy(() => import('./components/Tools/ToeslagenOnregelmatigeDienst/TOD'));
 const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollManager />
       <SkipLink />
       <SiteHeader />

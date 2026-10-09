@@ -8,6 +8,9 @@
  * goes and it never lands on top of text.
  */
 
+/** Morph target slots on the sculpture mesh (stone is the base shape). */
+export const MORPH = { stack: 0, exploded: 1, calm: 2 } as const;
+
 export const CHAPTERS = ['top', 'work', 'about', 'experience', 'contact'] as const;
 export type ChapterId = (typeof CHAPTERS)[number];
 

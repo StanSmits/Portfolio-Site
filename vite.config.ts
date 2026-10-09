@@ -39,6 +39,12 @@ function contactApi(mode: string): Plugin {
         void handle(() => server.ssrLoadModule('/api/contact.ts') as Promise<typeof import('./api/contact')>, req, res);
       });
     },
+    configurePreviewServer(server) {
+      // Node's type stripping loads the TypeScript handler directly (Node ≥ 22.6).
+      server.middlewares.use('/api/contact', (req, res) => {
+        void handle(() => import('./api/contact.ts'), req, res);
+      });
+    },
   };
 }
 

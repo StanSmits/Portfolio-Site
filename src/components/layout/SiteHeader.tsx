@@ -98,7 +98,7 @@ export function SiteHeader() {
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       <div className="shell flex h-[var(--header-h)] items-center justify-between gap-4">
-        <SectionLink id="top" className="group flex items-center gap-3 font-display text-[1.05rem] font-semibold tracking-tight">
+        <SectionLink id="top" className="group flex min-h-[2.75rem] items-center gap-3 font-display text-[1.05rem] font-semibold tracking-tight">
           <span className="grid h-9 w-9 place-items-center rounded-xl border border-line/20 transition-colors duration-300 group-hover:bg-ink group-hover:text-bg">
             <BrandMark className="h-6 w-6 transition-transform duration-500 ease-out group-hover:scale-110" />
           </span>
@@ -181,7 +181,7 @@ export function SiteHeader() {
         </nav>
         <div className="shell menu-item pb-8 pt-6" style={{ '--i': NAV_ITEMS.length } as React.CSSProperties}>
           <div className="hairline mb-6" />
-          <a href={`mailto:${PROFILE.email}`} className="link-line text-lg font-medium">
+          <a href={`mailto:${PROFILE.email}`} className="link-line inline-flex min-h-[2.75rem] items-center text-lg font-medium">
             {PROFILE.email}
           </a>
         </div>
