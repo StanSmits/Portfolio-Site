@@ -3,14 +3,14 @@ import react from '@vitejs/plugin-react';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
 /**
- * Serves the serverless contact handler (api/contact.ts) from the dev and preview servers,
+ * Serves the contact handler (server/contact.ts, deployed as a Cloudflare Pages Function) from the dev and preview servers,
  * so the form can be exercised locally. Set CONTACT_DRY_RUN=1 in .env.local to validate
  * without sending email; otherwise RESEND_API_KEY and CONTACT_FROM_EMAIL are required.
  */
 function contactApi(mode: string): Plugin {
   const env = loadEnv(mode, process.cwd(), '');
   const handle = async (
-    load: () => Promise<typeof import('./api/contact')>,
+    load: () => Promise<typeof import('./server/contact')>,
     req: IncomingMessage,
     res: ServerResponse
   ) => {
@@ -36,13 +36,13 @@ function contactApi(mode: string): Plugin {
     name: 'contact-api',
     configureServer(server: ViteDevServer) {
       server.middlewares.use('/api/contact', (req, res) => {
-        void handle(() => server.ssrLoadModule('/api/contact.ts') as Promise<typeof import('./api/contact')>, req, res);
+        void handle(() => server.ssrLoadModule('/server/contact.ts') as Promise<typeof import('./server/contact')>, req, res);
       });
     },
     configurePreviewServer(server) {
       // Node's type stripping loads the TypeScript handler directly (Node ≥ 22.6).
       server.middlewares.use('/api/contact', (req, res) => {
-        void handle(() => import('./api/contact.ts'), req, res);
+        void handle(() => import('./server/contact.ts'), req, res);
       });
     },
   };

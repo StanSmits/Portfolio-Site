@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import * as server from '../api/contact.ts';
-import * as client from '../src/lib/contactValidation.ts';
+import * as server from '../server/contact.ts';
+import * as validation from '../src/lib/contactValidation.ts';
+import { onRequest } from '../functions/api/contact.ts';
 
 const valid = { name: 'Ada Lovelace', email: 'ada@example.com', message: 'Hello there, nice portfolio!', elapsedMs: 5000 };
 const env = { RESEND_API_KEY: 're_test', CONTACT_FROM_EMAIL: 'Portfolio <portfolio@stansmits.nl>' };
@@ -23,25 +24,20 @@ function recordingFetch(status = 200) {
   return { calls, fetchImpl };
 }
 
-test('client and server validation stay identical', () => {
-  assert.deepEqual(server.CONTACT_LIMITS, client.CONTACT_LIMITS);
-  const cases = [
-    { name: '', email: '', message: '' },
-    { name: 'A', email: 'not-an-email', message: 'short' },
-    { name: 'x'.repeat(101), email: `${'a'.repeat(250)}@b.nl`, message: 'y'.repeat(5001) },
-    { name: '  Stan\u0007 ', email: ' Stan@Example.COM ', message: 'Line one\r\nLine two\u0000 ok' },
-    valid,
-  ];
-  for (const raw of cases) {
-    const a = server.normaliseContactInput(raw);
-    const b = client.normaliseContactInput(raw);
-    assert.deepEqual(a, b);
-    assert.deepEqual(server.validateContact(a), client.validateContact(b));
-  }
+test('validation reports each field problem', () => {
+  const errors = (raw: Record<string, string>) => validation.validateContact(validation.normaliseContactInput(raw));
+  assert.deepEqual(errors({ name: '', email: '', message: '' }), { name: 'required', email: 'required', message: 'required' });
+  assert.deepEqual(errors({ name: 'A', email: 'not-an-email', message: 'short' }), { email: 'emailInvalid', message: 'messageShort' });
+  assert.deepEqual(errors({ name: 'x'.repeat(101), email: `${'a'.repeat(250)}@b.nl`, message: 'y'.repeat(5001) }), {
+    name: 'tooLong',
+    email: 'tooLong',
+    message: 'tooLong',
+  });
+  assert.deepEqual(errors(valid as unknown as Record<string, string>), {});
 });
 
 test('normalisation trims, lowercases email and strips control characters', () => {
-  const input = server.normaliseContactInput({ name: '  Stan\u0007 ', email: ' Stan@Example.COM ', message: 'a\r\nb\u0000c' });
+  const input = validation.normaliseContactInput({ name: '  Stan\u0007 ', email: ' Stan@Example.COM ', message: 'a\r\nb\u0000c' });
   assert.equal(input.name, 'Stan');
   assert.equal(input.email, 'stan@example.com');
   assert.equal(input.message, 'a\nbc');
@@ -115,4 +111,11 @@ test('rate limits repeated submissions from one address', async () => {
   assert.equal((await server.handleContactRequest(request(valid, { headers }), opts)).status, 200);
   assert.equal((await server.handleContactRequest(request(valid, { headers }), opts)).status, 200);
   assert.equal((await server.handleContactRequest(request(valid, { headers }), opts)).status, 429);
+});
+
+test('Cloudflare Pages adapter passes the request and env through', async () => {
+  const res = await onRequest({ request: request(valid), env: {} });
+  assert.equal(res.status, 503, 'unconfigured env must not pretend to send');
+  const wrong = await onRequest({ request: request(null, { method: 'GET' }), env: {} });
+  assert.equal(wrong.status, 405);
 });

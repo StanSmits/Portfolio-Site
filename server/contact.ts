@@ -1,9 +1,9 @@
 /**
  * Contact form endpoint: POST /api/contact
  *
- * Written against the Web-standard Request/Response API so it runs on Vercel
- * (Node.js runtime, `export function POST`), in the Vite dev server (vite.config.ts)
- * and in Node's test runner. Email is delivered through Resend's HTTP API.
+ * Written against the Web-standard Request/Response API so the same code runs as a
+ * Cloudflare Pages Function (functions/api/contact.ts), in the Vite dev/preview servers
+ * (vite.config.ts) and in Node's test runner. Email is delivered through Resend's HTTP API.
  *
  * Required environment variables (server-side only, never exposed to the client):
  *   RESEND_API_KEY       API key from https://resend.com
@@ -12,66 +12,10 @@
  *   CONTACT_TO_EMAIL         Recipient (defaults to connect@stansmits.nl)
  *   CONTACT_ALLOWED_ORIGINS  Extra comma-separated origins allowed to post (e.g. a preview URL)
  *
- * This file intentionally has no relative imports so serverless bundlers handle it
- * without extra configuration. The validation rules mirror src/lib/contactValidation.ts;
- * api/contact.test.ts fails if the two drift apart.
+ * Validation is shared with the browser form (src/lib/contactValidation.ts).
  */
 
-// ---------------------------------------------------------------------------
-// Validation (mirror of src/lib/contactValidation.ts)
-// ---------------------------------------------------------------------------
-
-export const CONTACT_LIMITS = {
-  name: { max: 100 },
-  email: { max: 254 },
-  message: { min: 10, max: 5000 },
-} as const;
-
-export type ContactField = 'name' | 'email' | 'message';
-export type ContactErrorCode = 'required' | 'emailInvalid' | 'messageShort' | 'tooLong';
-export interface ContactInput {
-  name: string;
-  email: string;
-  message: string;
-}
-export type ContactErrors = Partial<Record<ContactField, ContactErrorCode>>;
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-export function normaliseContactInput(raw: Partial<Record<ContactField, unknown>>): ContactInput {
-  const clean = (value: unknown, multiline: boolean) => {
-    if (typeof value !== 'string') return '';
-    const text = value.replace(/\r\n?/g, '\n');
-    const stripped = multiline
-      ? // eslint-disable-next-line no-control-regex
-        text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-      : // eslint-disable-next-line no-control-regex
-        text.replace(/[\u0000-\u001F\u007F]/g, ' ');
-    return stripped.trim();
-  };
-  return {
-    name: clean(raw.name, false),
-    email: clean(raw.email, false).toLowerCase(),
-    message: clean(raw.message, true),
-  };
-}
-
-export function validateContact(input: ContactInput): ContactErrors {
-  const errors: ContactErrors = {};
-
-  if (!input.name) errors.name = 'required';
-  else if (input.name.length > CONTACT_LIMITS.name.max) errors.name = 'tooLong';
-
-  if (!input.email) errors.email = 'required';
-  else if (input.email.length > CONTACT_LIMITS.email.max) errors.email = 'tooLong';
-  else if (!EMAIL_PATTERN.test(input.email)) errors.email = 'emailInvalid';
-
-  if (!input.message) errors.message = 'required';
-  else if (input.message.length < CONTACT_LIMITS.message.min) errors.message = 'messageShort';
-  else if (input.message.length > CONTACT_LIMITS.message.max) errors.message = 'tooLong';
-
-  return errors;
-}
+import { normaliseContactInput, validateContact } from '../src/lib/contactValidation.ts';
 
 // ---------------------------------------------------------------------------
 // Handler
@@ -241,16 +185,4 @@ export async function handleContactRequest(request: Request, options: ContactHan
   } finally {
     clearTimeout(timer);
   }
-}
-
-// ---------------------------------------------------------------------------
-// Vercel adapter (Node.js runtime, Web-standard handlers)
-// ---------------------------------------------------------------------------
-
-export function POST(request: Request): Promise<Response> {
-  return handleContactRequest(request, { env: process.env as ContactEnv });
-}
-
-export function GET(): Response {
-  return json(405, { error: 'method_not_allowed' }, { Allow: 'POST' });
 }

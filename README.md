@@ -12,7 +12,8 @@ with real HTML content underneath, plus a few small tools (`/tools`).
 | 3D | three.js (vanilla, lazy-loaded) | One scene with an imperative render loop; no React re-renders per frame |
 | Motion | CSS transitions + a small custom scroll/damping controller | No animation library needed for this choreography |
 | i18n | i18next (NL default, EN) | Existing setup, kept |
-| Contact | Serverless function → Resend HTTP API | Keeps API keys server-side |
+| Hosting | Cloudflare Pages (static build + one Pages Function) | Existing host |
+| Contact | Pages Function → Resend HTTP API | Keeps API keys server-side |
 
 ## Scripts
 
@@ -40,7 +41,8 @@ src/
   scene/              three.js engine (lazy chunk), choreography, palettes, worker
   theme/              Theme provider (system preference + persisted choice)
   i18n/               Translations for UI strings
-api/contact.ts        Serverless contact handler (Web Request/Response API)
+server/contact.ts     Contact handler (Web Request/Response API, platform-agnostic)
+functions/api/        Cloudflare Pages Function adapter for /api/contact
 tests/                Node test-runner tests for the contact handler
 ```
 
@@ -83,14 +85,17 @@ body size limit, server-side validation and plain-text email only.
 
 ## Deployment
 
-The site is a static Vite build (`dist/`) plus one serverless function.
+The site deploys on **Cloudflare Pages** (build command `npm run build`, output `dist/`).
 
-- **Vercel** (configured in `vercel.json`): SPA rewrites (so `/tools/tod` etc. resolve),
-  security headers, long-lived caching for hashed assets, and `api/contact.ts` deployed as a
-  Node.js function. Set the environment variables above in the project settings.
-- **Other hosts:** serve `dist/` with a fallback to `index.html` for unknown paths, and run
-  `handleContactRequest` from `api/contact.ts` in the platform's function runtime (it only
-  needs the standard `Request`/`Response` API).
+- `functions/api/contact.ts` is picked up automatically as a Pages Function for
+  `/api/contact`; `public/_routes.json` limits function invocations to `/api/*`.
+- Set the contact variables above under *Settings → Environment variables* of the Pages
+  project (mark `RESEND_API_KEY` as a secret), for Production and, if wanted, Preview.
+- `public/_headers` adds security headers and long-lived caching for hashed assets.
+- Client-side routes such as `/tools/tod` work through Pages' single-page-app fallback
+  (there is deliberately no top-level `404.html`).
+- On another host: serve `dist/` with a fallback to `index.html`, and run
+  `handleContactRequest` from `server/contact.ts` in that platform's function runtime.
 
 `public/robots.txt`, `public/sitemap.xml`, favicons, the web manifest and the social preview
 image (`public/og-image.jpg`) are copied to the build output as-is.
