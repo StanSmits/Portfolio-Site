@@ -1,17 +1,9 @@
-import React from 'react';
-
-interface LoadingSpinnerProps {
-  className?: string;
-}
-
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className }) => {
+/** Minimal, non-blocking placeholder for lazily loaded routes. */
+export function PageFallback() {
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 backdrop-blur-sm ${className}`}>
-      <div className="relative h-16 w-16">
-        <div className="absolute inset-0 animate-spin rounded-full border-4 border-purple-500/20" />
-        <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-purple-500" style={{ animationDuration: '1s' }} />
-        <div className="absolute inset-0 animate-ping rounded-full border-4 border-purple-500/10" style={{ animationDuration: '2s' }} />
-      </div>
+    <div className="grid min-h-[60vh] place-items-center" role="status">
+      <span className="h-6 w-6 animate-spin rounded-full border-2 border-line/20 border-t-ink" aria-hidden="true" />
+      <span className="sr-only">Loading…</span>
     </div>
   );
-};
+}

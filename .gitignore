@@ -127,3 +127,6 @@ dist
 .pnp.*
 .DS_Store
 admin/stats.html
+
+# Cloudflare Wrangler local state
+.wrangler/

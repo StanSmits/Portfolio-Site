@@ -1,22 +1,97 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stan Smits - Software Developer & Public Safety Professional</title>
-    <meta name="description" content="Stan Smits - Professional portfolio showcasing expertise in Computer Science, Web Development, and Public Safety. Based in Amsterdam, Netherlands." />
-    <meta name="keywords" content="Stan Smits, Software Developer, Computer Science, Web Development, Amsterdam, Public Safety, Gemeente Amsterdam" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Stan Smits — Software developer &amp; public space enforcer, Amsterdam</title>
+    <meta
+      name="description"
+      content="Portfolio of Stan Smits, a software developer and public space enforcer in Amsterdam who builds focused tools for real workflows, including the RvW Generator."
+    />
     <meta name="author" content="Stan Smits" />
-    <meta property="og:title" content="Stan Smits - Software Developer & Public Safety Professional" />
-    <meta property="og:description" content="Professional portfolio of Stan Smits, showcasing expertise in Computer Science, Web Development, and Public Safety." />
-    <meta property="og:type" content="website" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://stansmits.nl" />
+    <link rel="canonical" href="https://stansmits.nl/" />
+    <link rel="alternate" hreflang="nl" href="https://stansmits.nl/" />
+    <link rel="alternate" hreflang="en" href="https://stansmits.nl/" />
+    <link rel="alternate" hreflang="x-default" href="https://stansmits.nl/" />
+
+    <meta name="theme-color" content="#F4F0E8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stan Smits" />
+    <meta property="og:url" content="https://stansmits.nl/" />
+    <meta property="og:title" content="Stan Smits — Software developer &amp; public space enforcer" />
+    <meta
+      property="og:description"
+      content="Focused tools for real workflows, built in Amsterdam. Featured: the RvW Generator."
+    />
+    <meta property="og:image" content="https://stansmits.nl/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Stan Smits — portfolio" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href="/fonts/syne-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script>
+      // Apply the theme before first paint to avoid a flash of the wrong theme.
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        var dark =
+          stored === 'dark' ||
+          (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        document.documentElement.classList.add('js-reveal');
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Stan Smits",
+        "url": "https://stansmits.nl/",
+        "image": "https://stansmits.nl/images/portrait-800.webp",
+        "jobTitle": ["Software developer", "Public space enforcer"],
+        "worksFor": { "@type": "GovernmentOrganization", "name": "Gemeente Amsterdam" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Hogeschool Leiden" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Amsterdam", "addressCountry": "NL" },
+        "email": "mailto:connect@stansmits.nl",
+        "sameAs": ["https://www.linkedin.com/in/stan-smits-63227b21a/", "https://github.com/StanSmits"]
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>Stan Smits</h1>
+        <p>Software developer &amp; public space enforcer in Amsterdam. I build focused tools for real workflows.</p>
+        <h2>Selected work</h2>
+        <p>
+          <a href="https://feitcodes.stansmits.nl">RvW Generator</a> — generates consistently structured
+          “reden van wetenschap” texts from Dutch offence codes (feitcodes), using templates, structured inputs and
+          conditional rules.
+        </p>
+        <h2>Contact</h2>
+        <p>
+          <a href="mailto:connect@stansmits.nl">connect@stansmits.nl</a> ·
+          <a href="https://www.linkedin.com/in/stan-smits-63227b21a/">LinkedIn</a>
+        </p>
+      </main>
+    </noscript>
   </body>
 </html>

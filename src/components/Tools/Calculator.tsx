@@ -6,11 +6,13 @@ const Calculator: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="text-center">
-      <h2 className="text-xl font-bold mb-4">{t('tools.calculator.title')}</h2>
-      <p className="text-gray-400 mb-4">{t('tools.calculator.description')}</p>
+    <section className="panel max-w-3xl p-6 sm:p-10" aria-labelledby="calculator-title">
+      <h2 id="calculator-title" className="h3">
+        {t('tools.calculator.title')}
+      </h2>
+      <p className="mb-8 mt-3 text-muted">{t('tools.calculator.description')}</p>
       <WageCalculator />
-    </div>
+    </section>
   );
 };
 

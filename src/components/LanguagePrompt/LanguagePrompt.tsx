@@ -1,57 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toLang } from '../../i18n/useLang';
+import { setLanguage } from '../../i18n/setLanguage';
 
-export const LanguagePrompt: React.FC = () => {
+/** First-visit language choice. Non-modal and dismissed permanently once a language is picked. */
+export function LanguagePrompt() {
   const [show, setShow] = useState(false);
   const { t, i18n } = useTranslation();
+  const current = toLang(i18n.resolvedLanguage ?? i18n.language);
 
   useEffect(() => {
-    if (localStorage.getItem('languagePromptShown')) {
-      setShow(false);
-      return;
+    let seen = false;
+    try {
+      seen = Boolean(localStorage.getItem('languagePromptShown'));
+    } catch {
+      seen = true;
     }
-
-    setShow(true);
+    if (seen) return;
+    const timer = window.setTimeout(() => setShow(true), 1800);
+    return () => window.clearTimeout(timer);
   }, []);
-
-  const handleLanguageSelect = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setShow(false);
-    localStorage.setItem('languagePromptShown', 'true');
-    document.cookie = `i18next=${lang}; path=/; max-age=31536000`; // Set the cookie for 1 year
-  };
 
   if (!show) return null;
 
+  const choose = (lang: 'en' | 'nl') => {
+    setLanguage(lang);
+    setShow(false);
+  };
+
   return (
-    <div className="fixed bottom-4 right-4 z-50 rounded-lg bg-gray-900/95 p-4 shadow-lg backdrop-blur-sm">
-      <div className="space-y-2">
-        <p className="text-sm text-gray-300">{t('languagePrompt.select')}</p>
-        <div className="flex space-x-2">
+    <aside
+      aria-label={t('languagePrompt.select')}
+      className="panel fixed bottom-4 left-4 right-4 z-40 p-4 sm:left-auto sm:max-w-xs"
+      style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
+    >
+      <p className="text-sm text-muted">{t('languagePrompt.select')}</p>
+      <div className="mt-3 flex gap-2">
+        {(['nl', 'en'] as const).map((lang) => (
           <button
-            onClick={() => handleLanguageSelect('en')}
-            className={
-              i18n.language === 'en'
-                ? 'text-purple-400 flex items-center px-3 py-1 text-sm hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
-                : 'flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors duration-300'
-            }
+            key={lang}
+            type="button"
+            lang={lang}
+            onClick={() => choose(lang)}
+            aria-pressed={current === lang}
+            className={`btn min-h-[2.75rem] flex-1 px-4 py-2 text-sm ${current === lang ? 'btn-primary' : 'btn-ghost'}`}
           >
-            <span className="mr-2">🇬🇧</span>
-            English
+            {lang === 'nl' ? 'Nederlands' : 'English'}
           </button>
-          <button
-            onClick={() => handleLanguageSelect('nl')}
-            className={
-              i18n.language === 'nl'
-                ? 'text-purple-400 flex items-center px-3 py-1 text-sm hover:bg-purple-500/10 hover:text-purple-600 rounded-md transition-colors duration-300'
-               : 'flex items-center px-3 py-1 text-sm text-gray-300 hover:bg-purple-500/10 hover:text-purple-400 rounded-md transition-colors duration-300'
-            }
-          >
-            <span className="mr-2">🇳🇱</span>
-            Nederlands
-          </button>
-        </div>
+        ))}
       </div>
-    </div>
+    </aside>
   );
-};
+}

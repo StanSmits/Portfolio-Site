@@ -40,43 +40,51 @@ export const WageCalculator: React.FC = () => {
   return (
     <div className="space-y-4">
       {showContinue && (
-        <div className="bg-purple-200 p-2 m-2 rounded-md text-sm flex justify-between items-center">
+        <div className="flex items-center justify-between rounded-xl border border-line/15 bg-surface p-2 text-sm">
           <div className="flex-1 text-center">
             <button
+              type="button"
               onClick={handleContinue}
-              className="relative text-gray-600 hover:text-gray-800 duration-300 transition-colors font-light after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1px] after:bg-gray-800 after:transition-all after:duration-300 hover:after:w-full"
+              className="link-line inline-flex min-h-[2.75rem] items-center text-muted hover:text-ink"
             >
               { t("tools.calculator.continueWithLastResult") }
               <ArrowBigRightDash size={16} className="inline-block ml-1" />
             </button>
           </div>
           <button
+            type="button"
             onClick={handleDismiss}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="icon-btn text-muted"
+            aria-label="Dismiss"
           >
             &times;
           </button>
         </div>
       )}
+      <label htmlFor="wage-input" className="sr-only">
+        { t("tools.calculator.textAreaPlaceholder") }
+      </label>
       <textarea
+        id="wage-input"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder={ t("tools.calculator.textAreaPlaceholder") }
-        className="w-full h-32 bg-gray-800/50 rounded-md p-2 text-sm text-gray-300 placeholder-gray-500 border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+        className="field h-36 font-mono text-sm"
       />
       <button
+        type="button"
         onClick={handleCalculate}
-        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-sm font-medium transition-colors"
+        className="btn btn-primary"
       >
         { t("tools.calculator.calculateWage") }
       </button>
       {result && (
-        <div className="mt-4 p-3 bg-gray-800/50 rounded-md">
+        <div className="mt-4 rounded-xl border border-line/15 bg-surface/60 p-4" role="status">
           <div className="text-sm space-y-1">
             {result.details.map((detail, index) => (
-              <p key={index} className="text-gray-300">{detail}</p>
+              <p key={index} className="font-mono text-muted">{detail}</p>
             ))}
-            <p className="text-purple-400 font-medium pt-2 border-t border-gray-700">
+            <p className="mt-2 border-t border-line/15 pt-3 font-semibold">
               { t("tools.calculator.total") }  €{result.total.toFixed(2)}
             </p>
           </div>

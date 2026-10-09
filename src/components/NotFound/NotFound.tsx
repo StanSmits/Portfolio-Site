@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { MetaTags } from '../SEO/MetaTags';
 
 const NotFound: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold mb-4">{t('notFound.title')}</h1>
-      <p className="mb-8">{t('notFound.description')}</p>
-      <Link
-        to="/"
-        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-sm font-medium transition-colors"
-      >
-        {t('notFound.homeLink')}
-      </Link>
-    </div>
+    <main id="main-content" tabIndex={-1} className="relative z-10 outline-none">
+      <MetaTags title={`404 — ${t('notFound.title')}`} />
+      <div className="shell flex min-h-[80svh] flex-col justify-center pt-[var(--header-h)]">
+        <p className="label">404</p>
+        <h1 className="h2 mt-4">{t('notFound.title')}</h1>
+        <p className="lead mt-6">{t('notFound.description')}</p>
+        <Link to="/" className="btn btn-primary mt-10 self-start">
+          {t('notFound.homeLink')}
+        </Link>
+      </div>
+    </main>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { TOOLS } from '../../utils/constants/tools';
 
@@ -7,24 +8,19 @@ export const ToolsList: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {TOOLS.map((tool) => (
-        <Link
-          key={tool.path}
-          to={tool.path}
-          className="group p-6 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all duration-300 hover:scale-[1.02]"
-        >
-          <div className="flex items-center mb-4">
-            <span className="text-2xl mr-3">{tool.icon}</span>
-            <h2 className="text-xl font-semibold text-white">
-              {t(`tools.${tool.id}.title`)}
-            </h2>
-          </div>
-          <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-            {t(`tools.${tool.id}.description`)}
-          </p>
-        </Link>
+        <li key={tool.path}>
+          <Link to={tool.path} className="panel group flex h-full flex-col p-6 transition-transform duration-500 ease-out hover:-translate-y-1">
+            <span className="text-2xl" aria-hidden="true">
+              {tool.icon}
+            </span>
+            <h2 className="h3 mt-4 !text-2xl">{t(`tools.${tool.id}.title`)}</h2>
+            <p className="mt-3 text-sm text-muted">{t(`tools.${tool.id}.description`)}</p>
+            <ArrowRight className="mt-6 h-5 w-5 transition-transform duration-500 ease-out group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

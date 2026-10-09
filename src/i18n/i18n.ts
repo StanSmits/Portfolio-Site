@@ -14,7 +14,7 @@ i18n
     },
     fallbackLng: 'nl',
     detection: {
-      order: ['cookie', 'localstorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+      order: ['cookie', 'localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
       caches: ['localStorage', 'cookie'],
       lookupLocalStorage: 'i18nextLng',
       lookupCookie: 'i18next',
@@ -28,3 +28,8 @@ i18n
   });
 
 export default i18n;
+const syncDocumentLanguage = (lng: string) => {
+  document.documentElement.lang = lng.startsWith('en') ? 'en' : 'nl';
+};
+syncDocumentLanguage(i18n.resolvedLanguage ?? i18n.language ?? 'nl');
+i18n.on('languageChanged', syncDocumentLanguage);

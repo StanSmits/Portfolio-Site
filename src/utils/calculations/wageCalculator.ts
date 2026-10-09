@@ -22,8 +22,6 @@ const calculateShiftWage = (shift: ShiftData): WageCalculationResult => {
 
   let currentTime = new Date(start);
   const evening = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 18, 0);
-  let regularHours = 0;
-  let eveningHours = 0;
   
   while (currentTime < end) {
     const hourEnd = new Date(Math.min(end.getTime(), currentTime.getTime() + (60 * 60 * 1000)));
@@ -32,10 +30,8 @@ const calculateShiftWage = (shift: ShiftData): WageCalculationResult => {
     let rate = WAGE_RATES.BASE;
     if (currentTime >= evening) {
       rate += WAGE_RATES.EVENING_BONUS_AFTER_18;
-      eveningHours += hourDuration;
     } else {
       rate += WAGE_RATES.EVENING_BONUS_BEFORE_18;
-      regularHours += hourDuration;
     }
     
     totalWage += hourDuration * rate;
